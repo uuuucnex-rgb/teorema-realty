@@ -10,37 +10,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{
-  --bg:#0A0F1A;--bg2:#0E1520;--bg3:#121B2A;
-  --surface:#172030;--surface2:#1D2A3E;
-  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
-  --blue:#3399FF;--blue-dim:rgba(51,153,255,0.11);--blue-mid:rgba(51,153,255,0.22);
-  --green:#22C97B;--green-dim:rgba(34,201,123,0.11);
-  --amber:#F5A623;--amber-dim:rgba(245,166,35,0.11);
-  --red:#FF5C5C;--red-dim:rgba(255,92,92,0.11);
-  --text:#EEF4FF;--text2:rgba(238,244,255,0.55);--text3:rgba(238,244,255,0.3);
-  --font:'Manrope',sans-serif;--display:'Unbounded',sans-serif;
-  --r:14px;--r-sm:8px;
-}
-html,body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5;min-height:100vh;overscroll-behavior:none}
+
+html,body{background:#0A0F1A;color:#EEF4FF;font-family:‘Manrope’, sans-serif;font-size:14px;line-height:1.5;min-height:100vh;overscroll-behavior:none}
 
 /* HEADER */
-.header{background:var(–bg);padding:16px 16px 14px;border-bottom:0.5px solid var(–border);position:sticky;top:0;z-index:100}
+.header{background:#0A0F1A;padding:16px 16px 14px;border-bottom:0.5px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:100}
 .logo-wrap{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .logo-img{height:36px;width:auto;object-fit:contain;filter:brightness(1.05)}
-.logo-tagline{font-size:10px;color:var(–text3);letter-spacing:0.5px;line-height:1.3}
-.logo-tagline strong{display:block;font-size:11px;color:var(–blue);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.logo-tagline{font-size:10px;color:rgba(238,244,255,0.3);letter-spacing:0.5px;line-height:1.3}
+.logo-tagline strong{display:block;font-size:11px;color:#3399FF;font-weight:600;letter-spacing:1px;text-transform:uppercase}
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.kpi{background:rgba(255,255,255,0.04);border:0.5px solid var(–border);border-radius:9px;padding:7px 9px}
-.kpi-l{font-size:9px;color:var(–text3);letter-spacing:0.3px;margin-bottom:2px}
-.kpi-v{font-family:var(–display);font-size:12px;font-weight:600;color:var(–text)}
-.kpi-v em{font-size:9px;font-weight:400;color:var(–blue);font-style:normal;margin-left:1px}
+.kpi{background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.07);border-radius:9px;padding:7px 9px}
+.kpi-l{font-size:9px;color:rgba(238,244,255,0.3);letter-spacing:0.3px;margin-bottom:2px}
+.kpi-v{font-family:‘Unbounded’, sans-serif;font-size:12px;font-weight:600;color:#EEF4FF}
+.kpi-v em{font-size:9px;font-weight:400;color:#3399FF;font-style:normal;margin-left:1px}
 
 /* TABS */
-.tabs{display:flex;background:var(–bg2);border-bottom:0.5px solid var(–border);padding:0 4px;overflow-x:auto;scrollbar-width:none}
+.tabs{display:flex;background:#0E1520;border-bottom:0.5px solid rgba(255,255,255,0.07);padding:0 4px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{font-size:13px;font-weight:500;padding:10px 14px;cursor:pointer;color:var(–text3);border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;user-select:none}
-.tab.active{color:var(–blue);border-bottom-color:var(–blue)}
+.tab{font-size:13px;font-weight:500;padding:10px 14px;cursor:pointer;color:rgba(238,244,255,0.3);border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;user-select:none}
+.tab.active{color:#3399FF;border-bottom-color:#3399FF}
 
 /* BODY */
 .body{padding:12px 12px 24px}
@@ -48,83 +37,83 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--font);font-si
 
 /* CHIPS */
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.chip{font-size:12px;padding:5px 12px;border:0.5px solid var(–border2);border-radius:20px;cursor:pointer;background:var(–surface);color:var(–text2);transition:all .15s;user-select:none}
-.chip.active{background:var(–blue);color:#fff;border-color:var(–blue)}
+.chip{font-size:12px;padding:5px 12px;border:0.5px solid rgba(255,255,255,0.13);border-radius:20px;cursor:pointer;background:#172030;color:rgba(238,244,255,0.55);transition:all .15s;user-select:none}
+.chip.active{background:#3399FF;color:#fff;border-color:#3399FF}
 
 /* LOT CARDS */
-.lot-card{background:var(–surface);border:0.5px solid var(–border);border-radius:var(–r);padding:12px 14px 12px 17px;margin-bottom:8px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;overflow:hidden}
+.lot-card{background:#172030;border:0.5px solid rgba(255,255,255,0.07);border-radius:14px;padding:12px 14px 12px 17px;margin-bottom:8px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;overflow:hidden}
 .lot-card::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
-.lot-card.type-торговое::before{background:var(–blue)}
-.lot-card.type-офис::before{background:var(–green)}
-.lot-card.type-склад::before{background:var(–amber)}
+.lot-card.type-торговое::before{background:#3399FF}
+.lot-card.type-офис::before{background:#22C97B}
+.lot-card.type-склад::before{background:#F5A623}
 .lot-card.type-псн::before{background:#A78BFF}
-.lot-card.sel,.lot-card:active{background:var(–surface2);border-color:var(–border2)}
+.lot-card.sel,.lot-card:active{background:#1D2A3E;border-color:rgba(255,255,255,0.13)}
 .lot-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.lot-name{font-size:13px;font-weight:600;color:var(–text);line-height:1.3;flex:1;padding-right:8px}
-.lot-addr{font-size:11px;color:var(–text3);margin-top:1px}
-.yield-pill{font-family:var(–display);font-size:12px;font-weight:600;padding:3px 8px;border-radius:7px;flex-shrink:0}
-.yg{background:var(–green-dim);color:var(–green)}
-.ym{background:var(–amber-dim);color:var(–amber)}
-.yl{background:var(–red-dim);color:var(–red)}
+.lot-name{font-size:13px;font-weight:600;color:#EEF4FF;line-height:1.3;flex:1;padding-right:8px}
+.lot-addr{font-size:11px;color:rgba(238,244,255,0.3);margin-top:1px}
+.yield-pill{font-family:‘Unbounded’, sans-serif;font-size:12px;font-weight:600;padding:3px 8px;border-radius:7px;flex-shrink:0}
+.yg{background:rgba(34,201,123,0.11);color:#22C97B}
+.ym{background:rgba(245,166,35,0.11);color:#F5A623}
+.yl{background:rgba(255,92,92,0.11);color:#FF5C5C}
 .lot-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.meta-item{font-size:11px;color:var(–text3)}.meta-item strong{color:var(–text2);font-weight:500}
+.meta-item{font-size:11px;color:rgba(238,244,255,0.3)}.meta-item strong{color:rgba(238,244,255,0.55);font-weight:500}
 .badge{font-size:10px;padding:2px 6px;border-radius:5px;font-weight:500}
 .badge-торговое{background:rgba(51,153,255,0.14);color:#7BBFFF}
 .badge-офис{background:rgba(34,201,123,0.14);color:#5EDFAA}
-.badge-склад{background:rgba(245,166,35,0.14);color:var(–amber)}
+.badge-склад{background:rgba(245,166,35,0.14);color:#F5A623}
 .badge-псн{background:rgba(167,139,255,0.14);color:#C4AEFF}
 
 /* DETAIL */
-.detail{background:var(–bg3);border:0.5px solid var(–border2);border-radius:var(–r);padding:14px;margin-bottom:12px;animation:si .2s ease}
+.detail{background:#121B2A;border:0.5px solid rgba(255,255,255,0.13);border-radius:14px;padding:14px;margin-bottom:12px;animation:si .2s ease}
 @keyframes si{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
-.detail-title{font-family:var(–display);font-size:12px;font-weight:600;color:var(–text);margin-bottom:11px;line-height:1.4}
+.detail-title{font-family:‘Unbounded’, sans-serif;font-size:12px;font-weight:600;color:#EEF4FF;margin-bottom:11px;line-height:1.4}
 .d-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;margin-bottom:10px}
-.d-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid var(–border);font-size:12px}
+.d-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.07);font-size:12px}
 .d-row:last-child{border-bottom:none}
-.d-key{color:var(–text3)}.d-val{font-weight:600;color:var(–text)}
-.d-val.acc{color:var(–blue)}.d-val.grn{color:var(–green)}.d-val.amb{color:var(–amber)}
-.comm-box{background:var(–blue-dim);border:0.5px solid var(–blue-mid);border-radius:10px;padding:11px 13px;margin-top:10px}
-.comm-lbl{font-size:10px;color:var(–blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
-.comm-val{font-family:var(–display);font-size:15px;font-weight:600;color:var(–blue)}
+.d-key{color:rgba(238,244,255,0.3)}.d-val{font-weight:600;color:#EEF4FF}
+.d-val.acc{color:#3399FF}.d-val.grn{color:#22C97B}.d-val.amb{color:#F5A623}
+.comm-box{background:rgba(51,153,255,0.11);border:0.5px solid rgba(51,153,255,0.22);border-radius:10px;padding:11px 13px;margin-top:10px}
+.comm-lbl{font-size:10px;color:#3399FF;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.comm-val{font-family:‘Unbounded’, sans-serif;font-size:15px;font-weight:600;color:#3399FF}
 .comm-sub{font-size:10px;color:rgba(51,153,255,0.55);margin-top:2px}
 
 /* CALC */
-.calc-card{background:var(–surface);border:0.5px solid var(–border);border-radius:var(–r);padding:13px;margin-bottom:10px}
-.calc-title{font-size:10px;color:var(–text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:11px}
+.calc-card{background:#172030;border:0.5px solid rgba(255,255,255,0.07);border-radius:14px;padding:13px;margin-bottom:10px}
+.calc-title{font-size:10px;color:rgba(238,244,255,0.3);letter-spacing:1px;text-transform:uppercase;margin-bottom:11px}
 .sl-row{display:flex;align-items:center;gap:8px;margin-bottom:11px}
-.sl-lbl{font-size:12px;color:var(–text2);min-width:115px}
-.sl-row input[type=range]{flex:1;-webkit-appearance:none;height:4px;border-radius:2px;background:var(–surface2);outline:none}
-.sl-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(–blue);cursor:pointer;box-shadow:0 0 0 4px rgba(51,153,255,0.18)}
-.sl-val{font-size:12px;font-weight:600;color:var(–text);min-width:58px;text-align:right}
+.sl-lbl{font-size:12px;color:rgba(238,244,255,0.55);min-width:115px}
+.sl-row input[type=range]{flex:1;-webkit-appearance:none;height:4px;border-radius:2px;background:#1D2A3E;outline:none}
+.sl-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#3399FF;cursor:pointer;box-shadow:0 0 0 4px rgba(51,153,255,0.18)}
+.sl-val{font-size:12px;font-weight:600;color:#EEF4FF;min-width:58px;text-align:right}
 .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.res-card{background:var(–bg3);border-radius:10px;padding:9px 11px;border:0.5px solid var(–border)}
-.res-lbl{font-size:10px;color:var(–text3);margin-bottom:2px}
-.res-val{font-size:14px;font-weight:600;color:var(–text)}
-.res-val.blue{color:var(–blue)}.res-val.green{color:var(–green)}.res-val.amber{color:var(–amber)}
+.res-card{background:#121B2A;border-radius:10px;padding:9px 11px;border:0.5px solid rgba(255,255,255,0.07)}
+.res-lbl{font-size:10px;color:rgba(238,244,255,0.3);margin-bottom:2px}
+.res-val{font-size:14px;font-weight:600;color:#EEF4FF}
+.res-val.blue{color:#3399FF}.res-val.green{color:#22C97B}.res-val.amber{color:#F5A623}
 .chart-wrap{position:relative;width:100%;height:175px;margin-top:12px}
 
 /* MARKET */
 .mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
-.mkt-card{background:var(–surface);border:0.5px solid var(–border);border-radius:10px;padding:9px 11px}
-.mkt-l{font-size:10px;color:var(–text3);margin-bottom:2px}
-.mkt-v{font-size:13px;font-weight:600;color:var(–text)}
-.mkt-s{font-size:10px;color:var(–text3);margin-top:1px}
-.seg-hdr{font-size:10px;color:var(–text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.seg-list{background:var(–surface);border:0.5px solid var(–border);border-radius:var(–r);padding:8px 13px;margin-bottom:13px}
-.seg-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(–border);font-size:12px}
+.mkt-card{background:#172030;border:0.5px solid rgba(255,255,255,0.07);border-radius:10px;padding:9px 11px}
+.mkt-l{font-size:10px;color:rgba(238,244,255,0.3);margin-bottom:2px}
+.mkt-v{font-size:13px;font-weight:600;color:#EEF4FF}
+.mkt-s{font-size:10px;color:rgba(238,244,255,0.3);margin-top:1px}
+.seg-hdr{font-size:10px;color:rgba(238,244,255,0.3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.seg-list{background:#172030;border:0.5px solid rgba(255,255,255,0.07);border-radius:14px;padding:8px 13px;margin-bottom:13px}
+.seg-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid rgba(255,255,255,0.07);font-size:12px}
 .seg-row:last-child{border-bottom:none}
 .seg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.seg-name{flex:1;color:var(–text2)}
-.seg-rent{font-weight:500;color:var(–text);min-width:95px;text-align:right;font-size:11px}
+.seg-name{flex:1;color:rgba(238,244,255,0.55)}
+.seg-rent{font-weight:500;color:#EEF4FF;min-width:95px;text-align:right;font-size:11px}
 .seg-pct{font-size:12px;font-weight:600;min-width:40px;text-align:right}
-.cm-box{background:var(–surface);border:0.5px solid var(–border);border-radius:var(–r);padding:13px;margin-bottom:13px}
-.cm-hdr{font-size:10px;color:var(–text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.cm-box{background:#172030;border:0.5px solid rgba(255,255,255,0.07);border-radius:14px;padding:13px;margin-bottom:13px}
+.cm-hdr{font-size:10px;color:rgba(238,244,255,0.3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
 .cm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.cm-l{font-size:10px;color:var(–blue);margin-bottom:2px}
-.cm-v{font-family:var(–display);font-size:17px;font-weight:600;color:var(–blue)}
-.cm-s{font-size:10px;color:var(–text3);margin-top:2px}
-.divider{height:0.5px;background:var(–border);margin:10px 0}
-.note{font-size:10px;color:var(–text3);margin-top:12px;line-height:1.6}
+.cm-l{font-size:10px;color:#3399FF;margin-bottom:2px}
+.cm-v{font-family:‘Unbounded’, sans-serif;font-size:17px;font-weight:600;color:#3399FF}
+.cm-s{font-size:10px;color:rgba(238,244,255,0.3);margin-top:2px}
+.divider{height:0.5px;background:rgba(255,255,255,0.07);margin:10px 0}
+.note{font-size:10px;color:rgba(238,244,255,0.3);margin-top:12px;line-height:1.6}
 
 @media(max-width:400px){
 .kpi-row{grid-template-columns:repeat(2,1fr)}
@@ -217,13 +206,13 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--font);font-si
   </div>
   <div class="seg-hdr">Доходность по сегментам</div>
   <div class="seg-list">
-    <div class="seg-row"><div class="seg-dot" style="background:#3399FF"></div><span class="seg-name">Стрит-ритейл, центр</span><span class="seg-rent">1200–2000 ₽/м²</span><span class="seg-pct" style="color:var(--green)">10–13%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#5BADFF"></div><span class="seg-name">Торговое, спальный р-н</span><span class="seg-rent">700–1200 ₽/м²</span><span class="seg-pct" style="color:var(--green)">9–11%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#22C97B"></div><span class="seg-name">ПСН в новостройке</span><span class="seg-rent">800–1100 ₽/м²</span><span class="seg-pct" style="color:var(--amber)">8–10%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#5EDFAA"></div><span class="seg-name">Офис класс B/B+</span><span class="seg-rent">700–1000 ₽/м²</span><span class="seg-pct" style="color:var(--amber)">8–10%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:var(--amber)"></div><span class="seg-name">Офис класс A / БЦ</span><span class="seg-rent">1500–2000 ₽/м²</span><span class="seg-pct" style="color:var(--green)">9–12%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#D4832A"></div><span class="seg-name">Склад / производство</span><span class="seg-rent">300–600 ₽/м²</span><span class="seg-pct" style="color:var(--amber)">7–10%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:var(--red)"></div><span class="seg-name">Подвал / цоколь</span><span class="seg-rent">200–500 ₽/м²</span><span class="seg-pct" style="color:var(--red)">5–8%</span></div>
+    <div class="seg-row"><div class="seg-dot" style="background:#3399FF"></div><span class="seg-name">Стрит-ритейл, центр</span><span class="seg-rent">1200–2000 ₽/м²</span><span class="seg-pct" style="color:#22C97B">10–13%</span></div>
+    <div class="seg-row"><div class="seg-dot" style="background:#5BADFF"></div><span class="seg-name">Торговое, спальный р-н</span><span class="seg-rent">700–1200 ₽/м²</span><span class="seg-pct" style="color:#22C97B">9–11%</span></div>
+    <div class="seg-row"><div class="seg-dot" style="background:#22C97B"></div><span class="seg-name">ПСН в новостройке</span><span class="seg-rent">800–1100 ₽/м²</span><span class="seg-pct" style="color:#F5A623">8–10%</span></div>
+    <div class="seg-row"><div class="seg-dot" style="background:#5EDFAA"></div><span class="seg-name">Офис класс B/B+</span><span class="seg-rent">700–1000 ₽/м²</span><span class="seg-pct" style="color:#F5A623">8–10%</span></div>
+    <div class="seg-row"><div class="seg-dot" style="background:#F5A623"></div><span class="seg-name">Офис класс A / БЦ</span><span class="seg-rent">1500–2000 ₽/м²</span><span class="seg-pct" style="color:#22C97B">9–12%</span></div>
+    <div class="seg-row"><div class="seg-dot" style="background:#D4832A"></div><span class="seg-name">Склад / производство</span><span class="seg-rent">300–600 ₽/м²</span><span class="seg-pct" style="color:#F5A623">7–10%</span></div>
+    <div class="seg-row"><div class="seg-dot" style="background:#FF5C5C"></div><span class="seg-name">Подвал / цоколь</span><span class="seg-rent">200–500 ₽/м²</span><span class="seg-pct" style="color:#FF5C5C">5–8%</span></div>
   </div>
   <div class="cm-box">
     <div class="cm-hdr">Комиссия агента — рынок Уфы</div>
@@ -280,7 +269,7 @@ function renderLots(){
       <span class="meta-item"><strong>${fmt(l.area)} м²</strong></span>
       <span class="meta-item"><strong>${fmtM(l.price)}</strong></span>
       <span class="meta-item">${fmt(l.rent*l.area)} ₽/мес</span>
-      <span class="meta-item" style="color:var(--text3)">${l.source}</span></div></div>`;
+      <span class="meta-item" style="color:rgba(238,244,255,0.3)">${l.source}</span></div></div>`;
   }).join('');
 }
 
