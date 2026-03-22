@@ -46,15 +46,14 @@ html,body{background:#F0F4F8;color:#0D1B2A;font-family:‘Manrope’,sans-serif;
 .chip.active{background:#3399FF;color:#fff;border-color:#3399FF}
 
 /* LOT CARDS стр1 */
-.lot-card{background:#172030;border:0.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px 12px 17px;margin-bottom:8px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
-.lot-card::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
-.lot-card.type-торговое::before{background:#3399FF}
-.lot-card.type-офис::before{background:#22C97B}
-.lot-card.type-склад::before{background:#F5A623}
-.lot-card.type-псн::before{background:#A78BFF}
+.lot-card{background:#172030;border:0.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px 12px 14px;margin-bottom:8px;cursor:pointer;transition:all .15s;position:relative}
+.lot-card.type-торговое{border-left:3px solid #3399FF}
+.lot-card.type-офис{border-left:3px solid #22C97B}
+.lot-card.type-склад{border-left:3px solid #F5A623}
+.lot-card.type-псн{border-left:3px solid #A78BFF}
 .lot-card:active,.lot-card.sel{background:#1D2A3E}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.card-name{font-size:13px;font-weight:600;color:#EEF4FF;line-height:1.3;flex:1;padding-right:8px}
+.card-name{font-size:13px;font-weight:600;color:#EEF4FF;line-height:1.3;flex:1;padding-right:8px;overflow:visible;white-space:normal;text-overflow:unset}
 .card-addr{font-size:11px;color:rgba(238,244,255,0.3);margin-top:1px}
 .yield-pill{font-family:‘Unbounded’,sans-serif;font-size:12px;font-weight:600;padding:3px 8px;border-radius:7px;flex-shrink:0}
 .yg{background:rgba(34,201,123,0.15);color:#22C97B}
@@ -121,12 +120,12 @@ html,body{background:#F0F4F8;color:#0D1B2A;font-family:‘Manrope’,sans-serif;
 
 /* ══ КНОПКА ПАРСЕРА ══ */
 .parser-banner{position:fixed;bottom:0;left:0;right:0;padding:12px 16px 20px;background:linear-gradient(to top, #F0F4F8 60%, transparent);z-index:200}
-.parser-btn{width:100%;background:linear-gradient(135deg,#00C853,#1DE97A);color:#fff;border:none;border-radius:14px;padding:15px 20px;font-family:‘Unbounded’,sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 20px rgba(0,200,83,0.4);transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}
+.parser-btn{width:100%;background:linear-gradient(135deg,#00C853,#1DE97A);color:#fff;border:none;border-radius:14px;padding:15px 16px;font-family:‘Unbounded’,sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px rgba(0,200,83,0.4);transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}
 .parser-btn:active{transform:scale(0.97);box-shadow:0 2px 10px rgba(0,200,83,0.3)}
 .parser-btn::before{content:’’;position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);animation:shine 2.5s infinite}
 @keyframes shine{to{left:200%}}
 .parser-btn-icon{font-size:20px}
-.parser-btn-text{display:flex;flex-direction:column;align-items:flex-start}
+.parser-btn-text{display:flex;flex-direction:column;align-items:center;text-align:center}
 .parser-btn-main{font-size:14px;font-weight:600;line-height:1.2}
 .parser-btn-sub{font-size:10px;font-weight:400;opacity:0.85;margin-top:1px}
 .parser-btn-badge{background:rgba(255,255,255,0.25);font-size:9px;padding:2px 7px;border-radius:10px;font-family:‘Manrope’,sans-serif;font-weight:700;letter-spacing:0.5px;white-space:nowrap}
@@ -169,12 +168,11 @@ html,body{background:#F0F4F8;color:#0D1B2A;font-family:‘Manrope’,sans-serif;
 
 /* P2 CARDS */
 .p2-body{padding:10px 12px 24px;background:#0A0F1A}
-.p2-card{background:#141F30;border:0.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px 12px 17px;margin-bottom:8px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
-.p2-card::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
-.p2-card.type-торговое::before{background:#3399FF}
-.p2-card.type-офис::before{background:#22C97B}
-.p2-card.type-склад::before{background:#F5A623}
-.p2-card.type-псн::before{background:#A78BFF}
+.p2-card{background:#141F30;border:0.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px 12px 14px;margin-bottom:8px;cursor:pointer;transition:all .15s;position:relative}
+.p2-card.type-торговое{border-left:3px solid #3399FF}
+.p2-card.type-офис{border-left:3px solid #22C97B}
+.p2-card.type-склад{border-left:3px solid #F5A623}
+.p2-card.type-псн{border-left:3px solid #A78BFF}
 .p2-card:active,.p2-card.sel{background:#1A2B40}
 .p2-card.new-obj::after{content:‘НОВЫЙ’;position:absolute;top:8px;right:44px;font-size:9px;font-weight:700;background:#22C97B;color:#fff;padding:2px 6px;border-radius:4px;letter-spacing:0.5px}
 .score-row{display:flex;align-items:center;gap:6px;margin-top:6px}
@@ -263,7 +261,6 @@ html,body{background:#F0F4F8;color:#0D1B2A;font-family:‘Manrope’,sans-serif;
 
   <div class="p1-body">
 
-```
 <!-- ЛОТЫ -->
 <div class="tp active" id="tp-lots">
   <div class="chips">
@@ -392,7 +389,6 @@ html,body{background:#F0F4F8;color:#0D1B2A;font-family:‘Manrope’,sans-serif;
     <div id="p2-detail"></div>
     <div id="p2-free"></div>
 
-```
 <!-- БЛЮР + ПЕЙВОЛЛ -->
 <div class="blur-section">
   <div class="blur-cards" id="p2-blurred"></div>
@@ -417,7 +413,6 @@ html,body{background:#F0F4F8;color:#0D1B2A;font-family:‘Manrope’,sans-serif;
     </div>
   </div>
 </div>
-```
 
   </div>
 </div><!-- /page2 -->
