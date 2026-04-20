@@ -1,668 +1,1476 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Теорема — Коммерческая недвижимость Уфа</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>СметаКровля AI — профессиональный расчёт кровельных работ</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs" type="module"></script>
+<script type="module">
+  import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs";
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.mjs";
+  window.pdfjsLib = pdfjsLib;
+</script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0b0d; --panel:#111316; --panel2:#16181c; --border:#24272d;
+  --text:#e8eaed; --text2:#8b9099; --text3:#5a5f68;
+  --accent:#ff6b35; --accent2:#ffa726; --ok:#4ade80; --warn:#fbbf24; --err:#ef4444;
+  --blue:#3b82f6;
+}
+html,body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+body{background:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(255,107,53,0.08),transparent),var(--bg)}
 
-/* ══ СТРАНИЦА 1: ЛИД-МАГНИТ ══ */
-#page1{display:block}
-#page2{display:none}
+/* ── HEADER ── */
+.hdr{border-bottom:1px solid var(--border);background:rgba(10,11,13,0.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:50}
+.hdr-inner{max-width:1400px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),#ff8a5b);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0a0b0d;font-size:18px;box-shadow:0 0 20px rgba(255,107,53,0.3)}
+.brand-txt h1{font-size:16px;font-weight:600;letter-spacing:-0.02em}
+.brand-txt p{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em}
+.hdr-actions{display:flex;gap:10px;align-items:center}
+.btn{padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--panel);color:var(--text);cursor:pointer;font-size:13px;font-weight:500;font-family:inherit;transition:all 0.15s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:var(--panel2);border-color:#363a42}
+.btn-primary{background:var(--accent);color:#0a0b0d;border-color:var(--accent);font-weight:600}
+.btn-primary:hover{background:#ff8a5b;border-color:#ff8a5b}
+.btn-ghost{background:transparent;border-color:transparent}
+.btn-ghost:hover{background:var(--panel)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-icon{width:36px;height:36px;padding:0;justify-content:center}
 
-html,body{background:#F0F4F8;color:#0D1B2A;font-family:‘Manrope’,sans-serif;font-size:14px;line-height:1.5;min-height:100vh;overscroll-behavior:none}
+/* ── LAYOUT ── */
+.main{max-width:1400px;margin:0 auto;padding:32px 24px}
+.hero{text-align:center;margin-bottom:40px}
+.hero h2{font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px}
+.hero h2 .accent{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--text2);font-size:16px;max-width:640px;margin:0 auto}
+.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
+.badge{padding:6px 14px;background:var(--panel);border:1px solid var(--border);border-radius:100px;font-size:12px;color:var(--text2);display:inline-flex;align-items:center;gap:6px}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
 
-/* HEADER тёмный */
-.p1-header{background:#0A0F1A;padding:14px 16px 12px;position:sticky;top:0;z-index:100;border-bottom:0.5px solid rgba(255,255,255,0.07)}
-.logo-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.logo-left{display:flex;align-items:center;gap:10px}
-.logo-img{height:32px;width:auto;object-fit:contain}
-.logo-tag{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.5px;line-height:1.3}
-.logo-tag strong{display:block;font-size:11px;color:#3399FF;font-weight:600;letter-spacing:1px;text-transform:uppercase}
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.kpi{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.08);border-radius:9px;padding:7px 9px}
-.kpi-l{font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:2px}
-.kpi-v{font-family:‘Unbounded’,sans-serif;font-size:12px;font-weight:600;color:#fff}
-.kpi-v em{font-size:9px;font-weight:400;color:#3399FF;font-style:normal;margin-left:1px}
+/* ── UPLOAD ── */
+.upload{max-width:780px;margin:0 auto}
+.dropzone{border:2px dashed var(--border);border-radius:16px;padding:48px 24px;text-align:center;background:var(--panel);transition:all 0.2s;cursor:pointer}
+.dropzone:hover,.dropzone.drag{border-color:var(--accent);background:var(--panel2);transform:translateY(-1px)}
+.dropzone-icon{width:56px;height:56px;margin:0 auto 16px;background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(255,167,38,0.15));border-radius:14px;display:flex;align-items:center;justify-content:center}
+.dropzone h3{font-size:17px;font-weight:600;margin-bottom:6px}
+.dropzone p{color:var(--text2);font-size:13px}
+.dropzone .formats{margin-top:16px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.dropzone .fmt{font-size:11px;color:var(--text3);padding:3px 9px;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid var(--border)}
+.upload-actions{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap}
+.divider-text{display:flex;align-items:center;gap:16px;margin:24px 0;color:var(--text3);font-size:12px}
+.divider-text::before,.divider-text::after{content:"";flex:1;height:1px;background:var(--border)}
 
-/* TABS стр1 */
-.p1-tabs{display:flex;background:#F0F4F8;border-bottom:0.5px solid #DDD;padding:0 4px;overflow-x:auto;scrollbar-width:none;position:sticky;top:107px;z-index:99}
-.p1-tabs::-webkit-scrollbar{display:none}
-.p1-tab{font-size:13px;font-weight:500;padding:10px 14px;cursor:pointer;color:#AAA;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;user-select:none}
-.p1-tab.active{color:#3399FF;border-bottom-color:#3399FF}
+/* ── SAMPLE OBJECT ── */
+.sample-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:16px}
+.sample-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:all 0.15s;text-align:left}
+.sample-card:hover{border-color:var(--accent);background:var(--panel2)}
+.sample-card .type{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:4px}
+.sample-card .name{font-size:14px;font-weight:500;margin-bottom:8px}
+.sample-card .area{font-size:12px;color:var(--text2)}
 
-/* BODY стр1 */
-.p1-body{padding:12px 12px 100px}
-.tp{display:none}.tp.active{display:block}
+/* ── PROJECT VIEW ── */
+.project{display:none;animation:fadein 0.3s ease}
+.project.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* CHIPS */
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.chip{font-size:12px;padding:5px 12px;border:0.5px solid #DDD;border-radius:20px;cursor:pointer;background:#fff;color:#666;transition:all .15s;user-select:none;font-weight:500}
-.chip.active{background:#3399FF;color:#fff;border-color:#3399FF}
+.project-hdr{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.ph-info h2{font-size:20px;font-weight:600;margin-bottom:6px;max-width:600px}
+.ph-info .meta{color:var(--text2);font-size:13px;display:flex;gap:16px;flex-wrap:wrap}
+.ph-info .meta span{display:inline-flex;gap:6px;align-items:center}
+.ph-info .meta .k{color:var(--text3)}
+.ph-actions{display:flex;gap:8px;flex-wrap:wrap}
 
-/* LOT CARDS стр1 */
-.lot-card{background:#172030;border:0.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px 12px 14px;margin-bottom:8px;cursor:pointer;transition:all .15s;position:relative}
-.lot-card.type-торговое{border-left:3px solid #3399FF}
-.lot-card.type-офис{border-left:3px solid #22C97B}
-.lot-card.type-склад{border-left:3px solid #F5A623}
-.lot-card.type-псн{border-left:3px solid #A78BFF}
-.lot-card:active,.lot-card.sel{background:#1D2A3E}
-.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.card-name{font-size:13px;font-weight:600;color:#EEF4FF;line-height:1.3;flex:1;padding-right:8px;overflow:visible;white-space:normal;text-overflow:unset}
-.card-addr{font-size:11px;color:rgba(238,244,255,0.3);margin-top:1px}
-.yield-pill{font-family:‘Unbounded’,sans-serif;font-size:12px;font-weight:600;padding:3px 8px;border-radius:7px;flex-shrink:0}
-.yg{background:rgba(34,201,123,0.15);color:#22C97B}
-.ym{background:rgba(245,166,35,0.15);color:#F5A623}
-.yl{background:rgba(255,92,92,0.15);color:#FF5C5C}
-.card-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.mi{font-size:11px;color:rgba(238,244,255,0.3)}.mi strong{color:rgba(238,244,255,0.6);font-weight:500}
-.badge{font-size:10px;padding:2px 6px;border-radius:5px;font-weight:600}
-.badge-торговое{background:rgba(51,153,255,0.15);color:#7BBFFF}
-.badge-офис{background:rgba(34,201,123,0.15);color:#5EDFAA}
-.badge-склад{background:rgba(245,166,35,0.15);color:#F5A623}
-.badge-псн{background:rgba(167,139,255,0.15);color:#C4AEFF}
+/* ── STATS ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px;position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent)}
+.stat.ok::before{background:var(--ok)}
+.stat.blue::before{background:var(--blue)}
+.stat.warn::before{background:var(--warn)}
+.stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
+.stat-value{font-size:24px;font-weight:700;letter-spacing:-0.02em}
+.stat-value small{font-size:14px;color:var(--text2);font-weight:500;margin-left:2px}
+.stat-sub{font-size:12px;color:var(--text2);margin-top:4px}
 
-/* DETAIL стр1 */
-.detail{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);animation:si .2s ease}
-@keyframes si{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
-.detail-title{font-family:‘Unbounded’,sans-serif;font-size:12px;font-weight:600;color:#0A0F1A;margin-bottom:12px;line-height:1.4}
-.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;margin-bottom:10px}
-.d-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #EEE;font-size:12px}
-.d-row:last-child{border-bottom:none}
-.d-key{color:#AAA}.d-val{font-weight:600;color:#0A0F1A}
-.d-val.grn{color:#22C97B}.d-val.amb{color:#F5A623}.d-val.blu{color:#3399FF}
-.comm-box{background:#EEF6FF;border:0.5px solid rgba(51,153,255,0.25);border-radius:10px;padding:11px 13px;margin-top:10px}
-.comm-lbl{font-size:10px;color:#3399FF;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
-.comm-val{font-family:‘Unbounded’,sans-serif;font-size:15px;font-weight:600;color:#3399FF}
-.comm-sub{font-size:10px;color:rgba(51,153,255,0.6);margin-top:2px}
+/* ── TABLES ── */
+.section{background:var(--panel);border:1px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden}
+.section-hdr{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.section-hdr h3{font-size:15px;font-weight:600;display:flex;align-items:center;gap:10px}
+.section-hdr h3 .pill{font-size:11px;font-weight:500;padding:3px 8px;border-radius:100px;background:rgba(255,107,53,0.15);color:var(--accent)}
+.section-hdr h3 .pill.blue{background:rgba(59,130,246,0.15);color:var(--blue)}
+.section-hdr h3 .pill.green{background:rgba(74,222,128,0.12);color:var(--ok)}
+.section-sub{color:var(--text2);font-size:12px}
+.tbl-wrap{overflow-x:auto}
+table.est{width:100%;border-collapse:collapse;font-size:13px;min-width:780px}
+table.est th{background:var(--panel2);padding:10px 14px;text-align:left;font-weight:500;color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border);white-space:nowrap}
+table.est th.r{text-align:right}
+table.est td{padding:12px 14px;border-bottom:1px solid rgba(36,39,45,0.5)}
+table.est td.r{text-align:right;font-variant-numeric:tabular-nums}
+table.est tr:last-child td{border-bottom:none}
+table.est tr:hover td{background:rgba(255,255,255,0.02)}
+table.est .name-col{font-weight:500}
+table.est .match-src{font-size:11px;color:var(--text3);margin-top:2px}
+table.est .match-src.auto{color:var(--ok)}
+table.est .match-src.manual{color:var(--warn)}
+table.est .match-src.unknown{color:var(--err)}
+.price-input{width:110px;padding:6px 10px;background:var(--panel2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;text-align:right;font-family:inherit;font-variant-numeric:tabular-nums}
+.price-input:focus{outline:none;border-color:var(--accent);background:var(--bg)}
+.qty-cell{color:var(--text2);font-variant-numeric:tabular-nums}
+.tot-cell{font-weight:600}
 
-/* CALC стр1 */
-.calc-card{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:14px;padding:13px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
-.calc-title{font-size:10px;color:#AAA;letter-spacing:1px;text-transform:uppercase;margin-bottom:11px}
-.sl-row{display:flex;align-items:center;gap:8px;margin-bottom:11px}
-.sl-lbl{font-size:12px;color:#444;min-width:115px}
-.sl-row input[type=range]{flex:1;-webkit-appearance:none;height:4px;border-radius:2px;background:#E5E7EB;outline:none}
-.sl-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#3399FF;cursor:pointer;box-shadow:0 0 0 4px rgba(51,153,255,0.15)}
-.sl-val{font-size:12px;font-weight:600;color:#0A0F1A;min-width:58px;text-align:right}
-.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.res-card{background:#F5F7FA;border-radius:10px;padding:9px 11px;border:0.5px solid rgba(0,0,0,0.06)}
-.res-lbl{font-size:10px;color:#AAA;margin-bottom:2px}
-.res-val{font-size:14px;font-weight:600;color:#0A0F1A}
-.res-val.blue{color:#3399FF}.res-val.green{color:#22C97B}.res-val.amber{color:#F5A623}
-.chart-wrap{position:relative;width:100%;height:175px;margin-top:12px}
+/* ── SECTION TOTAL ── */
+.section-total{padding:14px 20px;background:var(--panel2);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
+.section-total .lbl{font-size:13px;color:var(--text2);font-weight:500}
+.section-total .val{font-size:18px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
 
-/* MARKET стр1 */
-.mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
-.mkt-card{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:10px;padding:9px 11px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
-.mkt-l{font-size:10px;color:#AAA;margin-bottom:2px}
-.mkt-v{font-size:13px;font-weight:600;color:#0A0F1A}
-.mkt-s{font-size:10px;color:#AAA;margin-top:1px}
-.seg-hdr{font-size:10px;color:#AAA;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.seg-list{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:14px;padding:8px 13px;margin-bottom:13px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
-.seg-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid #EEE;font-size:12px}
-.seg-row:last-child{border-bottom:none}
-.seg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.seg-name{flex:1;color:#444}
-.seg-rent{font-weight:500;color:#0A0F1A;min-width:95px;text-align:right;font-size:11px}
-.seg-pct{font-size:12px;font-weight:600;min-width:40px;text-align:right}
-.cm-box{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:14px;padding:13px;margin-bottom:13px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
-.cm-hdr{font-size:10px;color:#AAA;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
-.cm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.cm-l{font-size:10px;color:#3399FF;margin-bottom:2px}
-.cm-v{font-family:‘Unbounded’,sans-serif;font-size:17px;font-weight:600;color:#3399FF}
-.cm-s{font-size:10px;color:#AAA;margin-top:2px}
-.note{font-size:10px;color:#AAA;margin-top:12px;line-height:1.6}
+/* ── MARGIN CTRL ── */
+.margin-card{background:linear-gradient(135deg,var(--panel),var(--panel2));border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+.margin-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.margin-head h3{font-size:15px;font-weight:600}
+.margin-ctrl{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.margin-slider{flex:1;min-width:200px;-webkit-appearance:none;appearance:none;height:4px;background:var(--border);border-radius:2px;outline:none}
+.margin-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;background:var(--accent);border-radius:50%;cursor:pointer;box-shadow:0 0 0 4px rgba(255,107,53,0.2)}
+.margin-slider::-moz-range-thumb{width:18px;height:18px;background:var(--accent);border-radius:50%;cursor:pointer;border:none}
+.margin-val{font-size:24px;font-weight:700;color:var(--accent);min-width:60px;text-align:right}
+.margin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:14px}
+.margin-grid .mi{background:rgba(10,11,13,0.5);border:1px solid var(--border);border-radius:8px;padding:12px}
+.margin-grid .mi .l{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.margin-grid .mi .v{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.margin-grid .mi .v.ok{color:var(--ok)}
+.margin-grid .mi .v.blue{color:var(--blue)}
 
-/* ══ КНОПКА ПАРСЕРА ══ */
-.parser-banner{position:fixed;bottom:0;left:0;right:0;padding:12px 16px 20px;background:linear-gradient(to top, #F0F4F8 60%, transparent);z-index:200}
-.parser-btn{width:100%;background:linear-gradient(135deg,#00C853,#1DE97A);color:#fff;border:none;border-radius:14px;padding:15px 16px;font-family:‘Unbounded’,sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px rgba(0,200,83,0.4);transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}
-.parser-btn:active{transform:scale(0.97);box-shadow:0 2px 10px rgba(0,200,83,0.3)}
-.parser-btn::before{content:’’;position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);animation:shine 2.5s infinite}
-@keyframes shine{to{left:200%}}
-.parser-btn-icon{font-size:20px}
-.parser-btn-text{display:flex;flex-direction:column;align-items:center;text-align:center}
-.parser-btn-main{font-size:16px;font-weight:600;line-height:1.2}
-.parser-btn-sub{font-size:12px;font-weight:400;opacity:0.85;margin-top:1px}
-.parser-btn-badge{background:rgba(255,255,255,0.25);font-size:9px;padding:2px 7px;border-radius:10px;font-family:‘Manrope’,sans-serif;font-weight:700;letter-spacing:0.5px;white-space:nowrap}
+/* ── INSIGHTS ── */
+.insights{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:20px}
+.ins{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;gap:12px}
+.ins-icon{width:36px;height:36px;flex-shrink:0;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.ins.ok .ins-icon{background:rgba(74,222,128,0.15);color:var(--ok)}
+.ins.warn .ins-icon{background:rgba(251,191,36,0.15);color:var(--warn)}
+.ins.tip .ins-icon{background:rgba(59,130,246,0.15);color:var(--blue)}
+.ins-body h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.ins-body p{font-size:12px;color:var(--text2);line-height:1.5}
 
-/* ══ СТРАНИЦА 2: ПАРСЕР ══ */
-#page2{background:#0A0F1A;min-height:100vh}
-.p2-header{background:#0D1525;padding:14px 16px 12px;position:sticky;top:0;z-index:100;border-bottom:0.5px solid rgba(255,255,255,0.08)}
-.p2-logo-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.p2-back{font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 0}
-.p2-back:active{opacity:0.6}
-.p2-title-block{text-align:center}
-.p2-title{font-family:‘Unbounded’,sans-serif;font-size:13px;font-weight:600;color:#fff}
-.p2-sub{font-size:10px;color:rgba(255,255,255,0.35);margin-top:1px}
-.live-badge{display:flex;align-items:center;gap:5px;font-size:11px;color:#22C97B;font-weight:600}
-.live-dot{width:6px;height:6px;border-radius:50%;background:#22C97B;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+/* ── MODAL ── */
+.ovl{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(6px)}
+.ovl.on{display:flex}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:28px;max-width:480px;width:90%;text-align:center}
+.modal h3{font-size:18px;font-weight:600;margin-bottom:10px}
+.modal p{color:var(--text2);margin-bottom:20px;line-height:1.6}
 
-.p2-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.p2-kpi-card{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.07);border-radius:9px;padding:7px 9px}
-.p2-kpi-l{font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:2px}
-.p2-kpi-v{font-family:‘Unbounded’,sans-serif;font-size:13px;font-weight:600;color:#fff}
-.p2-kpi-v em{font-size:9px;font-weight:400;color:#22C97B;font-style:normal}
+/* ── LOADER ── */
+.loader{position:fixed;inset:0;background:rgba(10,11,13,0.85);display:none;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(10px)}
+.loader.on{display:flex;flex-direction:column;gap:20px}
+.spinner{width:52px;height:52px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader p{color:var(--text2);font-size:14px}
 
-/* UPDATE TICKER */
-.update-ticker{background:#0A1A0F;border-bottom:0.5px solid rgba(34,201,123,0.2);padding:7px 16px;display:flex;align-items:center;gap:8px;overflow:hidden}
-.ticker-dot{width:6px;height:6px;border-radius:50%;background:#22C97B;flex-shrink:0;animation:pulse 1.5s infinite}
-.ticker-text{font-size:11px;color:#22C97B;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ticker-sources{display:flex;gap:6px;margin-left:auto;flex-shrink:0}
-.tsrc{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:700}
-.tsrc-tg{background:rgba(34,158,217,0.2);color:#229ED9}
-.tsrc-av{background:rgba(255,107,43,0.2);color:#FF6B2B}
-.tsrc-ci{background:rgba(0,168,107,0.2);color:#00A86B}
+/* ── TABS ── */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:20px;overflow-x:auto}
+.tab{padding:10px 16px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.15s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 
-/* SORT/FILTER стр2 */
-.p2-filters{padding:10px 12px 0;background:#0A0F1A}
-.p2-sort{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px}
-.p2-sort::-webkit-scrollbar{display:none}
-.p2-sort-btn{font-size:11px;padding:5px 12px;border:0.5px solid rgba(255,255,255,0.12);border-radius:6px;cursor:pointer;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5);white-space:nowrap;user-select:none;font-weight:500;transition:all .15s}
-.p2-sort-btn.active{background:#3399FF;color:#fff;border-color:#3399FF}
+/* ── TYPE HEADER ── */
+.type-hdr{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(90deg,rgba(255,107,53,0.08),transparent);border-bottom:1px solid var(--border)}
+.type-num{width:28px;height:28px;background:var(--accent);color:#0a0b0d;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.type-title{font-size:14px;font-weight:600}
+.type-area{margin-left:auto;font-size:12px;color:var(--text2);padding:3px 10px;background:var(--panel2);border:1px solid var(--border);border-radius:100px}
 
-/* P2 CARDS */
-.p2-body{padding:10px 12px 24px;background:#0A0F1A}
-.p2-card{background:#141F30;border:0.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px 12px 14px;margin-bottom:8px;cursor:pointer;transition:all .15s;position:relative}
-.p2-card.type-торговое{border-left:3px solid #3399FF}
-.p2-card.type-офис{border-left:3px solid #22C97B}
-.p2-card.type-склад{border-left:3px solid #F5A623}
-.p2-card.type-псн{border-left:3px solid #A78BFF}
-.p2-card:active,.p2-card.sel{background:#1A2B40}
-.p2-card.new-obj::after{content:‘НОВЫЙ’;position:absolute;top:8px;right:44px;font-size:9px;font-weight:700;background:#22C97B;color:#fff;padding:2px 6px;border-radius:4px;letter-spacing:0.5px}
-.score-row{display:flex;align-items:center;gap:6px;margin-top:6px}
-.score-lbl{font-size:10px;color:rgba(255,255,255,0.25);min-width:50px}
-.score-bg{flex:1;height:4px;background:rgba(255,255,255,0.07);border-radius:2px}
-.score-fill{height:4px;border-radius:2px}
-.score-num{font-size:11px;font-weight:600;min-width:28px;text-align:right}
-.src-pill{font-size:10px;padding:1px 5px;border-radius:4px;font-weight:600}
-.sp-tg{background:rgba(34,158,217,0.18);color:#229ED9}
-.sp-av{background:rgba(255,107,43,0.18);color:#FF6B2B}
-.sp-ci{background:rgba(0,168,107,0.18);color:#00A86B}
+/* ── HELP TEXT ── */
+.help-card{background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(59,130,246,0.03));border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:14px 16px;margin-bottom:20px;display:flex;gap:12px;font-size:13px;color:var(--text2)}
+.help-card svg{flex-shrink:0;color:var(--blue);margin-top:1px}
 
-/* P2 DETAIL */
-.p2-detail{background:#0D1525;border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px;margin-bottom:10px;animation:si .2s ease}
-.p2-det-title{font-family:‘Unbounded’,sans-serif;font-size:12px;font-weight:600;color:#EEF4FF;margin-bottom:12px;line-height:1.4}
-.p2-d-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;margin-bottom:10px}
-.p2-d-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);font-size:12px}
-.p2-d-row:last-child{border-bottom:none}
-.p2-d-key{color:rgba(255,255,255,0.3)}.p2-d-val{font-weight:600;color:#EEF4FF}
-.p2-d-val.grn{color:#22C97B}.p2-d-val.amb{color:#F5A623}.p2-d-val.blu{color:#3399FF}
-.p2-comm{background:rgba(51,153,255,0.1);border:0.5px solid rgba(51,153,255,0.25);border-radius:10px;padding:11px 13px;margin-top:8px}
-.p2-comm-lbl{font-size:10px;color:#3399FF;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-.p2-comm-val{font-family:‘Unbounded’,sans-serif;font-size:15px;font-weight:600;color:#3399FF}
-.p2-comm-sub{font-size:10px;color:rgba(51,153,255,0.5);margin-top:2px}
-.hot-box{background:rgba(34,201,123,0.08);border:0.5px solid rgba(34,201,123,0.25);border-radius:10px;padding:10px 12px;margin-top:8px}
-.hot-lbl{font-size:10px;color:#22C97B;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:2px}
-.hot-txt{font-size:11px;color:rgba(34,201,123,0.7)}
+/* ── DONE BANNER ── */
+.success-banner{background:linear-gradient(135deg,rgba(74,222,128,0.12),rgba(74,222,128,0.04));border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.success-banner svg{color:var(--ok);flex-shrink:0}
+.success-banner .text{font-size:13px}
+.success-banner .text strong{color:var(--ok)}
 
-/* BLUR / PAYWALL */
-.blur-section{position:relative;margin-top:4px}
-.blur-cards{filter:blur(5px);pointer-events:none;user-select:none;opacity:0.6}
-.paywall{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;z-index:10}
-.paywall-card{background:#0D1525;border:0.5px solid rgba(255,255,255,0.12);border-radius:18px;padding:22px 20px;text-align:center;width:100%;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
-.paywall-icon{font-size:32px;margin-bottom:10px}
-.paywall-title{font-family:‘Unbounded’,sans-serif;font-size:14px;font-weight:600;color:#EEF4FF;margin-bottom:6px;line-height:1.4}
-.paywall-sub{font-size:12px;color:rgba(238,244,255,0.45);margin-bottom:16px;line-height:1.6}
-.paywall-features{text-align:left;margin-bottom:18px}
-.pf-row{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12px;color:rgba(238,244,255,0.6);border-bottom:0.5px solid rgba(255,255,255,0.05)}
-.pf-row:last-child{border-bottom:none}
-.pf-icon{font-size:14px;flex-shrink:0}
-.price-block{margin-bottom:16px}
-.price-main{font-family:‘Unbounded’,sans-serif;font-size:24px;font-weight:600;color:#fff}
-.price-period{font-size:12px;color:rgba(238,244,255,0.4);margin-top:2px}
-.pay-btn{width:100%;background:linear-gradient(135deg,#3399FF,#0066CC);color:#fff;border:none;border-radius:12px;padding:14px;font-family:‘Unbounded’,sans-serif;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(51,153,255,0.35);transition:transform .15s}
-.pay-btn:active{transform:scale(0.97)}
-.pay-note{font-size:10px;color:rgba(238,244,255,0.25);margin-top:8px}
+/* ── PDF VIEWER ── */
+.pdf-panel{position:fixed;top:0;right:0;bottom:0;width:min(540px,55vw);background:var(--panel);border-left:1px solid var(--border);z-index:80;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.3s ease;box-shadow:-20px 0 40px rgba(0,0,0,0.4)}
+.pdf-panel.on{transform:translateX(0)}
+.pdf-panel-hdr{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--panel2)}
+.pdf-panel-hdr h3{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.pdf-panel-hdr .fn{color:var(--text3);font-size:12px;font-weight:400}
+.pdf-ctrls{display:flex;gap:6px;align-items:center}
+.pdf-ctrls button{background:var(--panel);border:1px solid var(--border);color:var(--text);width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.pdf-ctrls button:hover{border-color:var(--accent)}
+.pdf-ctrls button:disabled{opacity:0.4;cursor:not-allowed}
+.pdf-ctrls .zoom{min-width:50px;text-align:center;font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums}
+.pdf-pages{flex:1;overflow:auto;padding:14px;background:#0a0b0d;display:flex;flex-direction:column;gap:14px;align-items:center}
+.pdf-page-wrap{background:white;box-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:100%}
+.pdf-page-wrap canvas{display:block;max-width:100%;height:auto}
+.pdf-page-num{font-size:11px;color:var(--text3);text-align:center;margin-bottom:-6px;margin-top:8px;letter-spacing:0.08em;text-transform:uppercase}
+.pdf-pages.empty{display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;text-align:center;padding:40px}
+.pdf-toggle-btn{position:fixed;bottom:24px;right:24px;z-index:70;background:var(--accent);color:#0a0b0d;border:none;border-radius:100px;padding:12px 20px;font-weight:600;font-family:inherit;font-size:13px;cursor:pointer;box-shadow:0 8px 24px rgba(255,107,53,0.4);display:none;align-items:center;gap:8px;transition:all 0.15s}
+.pdf-toggle-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,107,53,0.5)}
+.pdf-toggle-btn.on{display:inline-flex}
+.pdf-toggle-btn .count{background:rgba(10,11,13,0.2);padding:2px 8px;border-radius:100px;font-size:11px}
+.pdf-close{background:var(--panel)!important;border:1px solid var(--border)!important;color:var(--text)!important;font-size:14px;padding:6px 10px!important;width:auto!important;height:auto!important;border-radius:6px!important}
+.pdf-hint{background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(59,130,246,0.03));border:1px solid rgba(59,130,246,0.25);border-radius:10px;padding:12px 14px;margin:12px 0;color:var(--text2);font-size:12px;line-height:1.6}
+.pdf-hint strong{color:var(--text)}
 
-/* СЕКЦИЯ “ПОКАЗЫВАЕМ 3 ОБЪЕКТА” */
-.free-label{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px;padding:0 2px}
-.free-label::after{content:’’;flex:1;height:0.5px;background:rgba(255,255,255,0.07)}
+/* ── UPLOAD FOR PDF ── */
+.upload-dual{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.upload-dual .dropzone{padding:32px 20px}
+.upload-dual .dropzone-icon{width:44px;height:44px;margin-bottom:10px}
+.upload-dual .dropzone h3{font-size:14px;margin-bottom:4px}
+.upload-dual .dropzone p{font-size:12px}
+@media (max-width:640px){
+  .upload-dual{grid-template-columns:1fr}
+  .pdf-panel{width:100%;max-width:100%}
+}
+/* ── FOOTER ── */
+.ftr{border-top:1px solid var(--border);padding:28px 24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px}
+.ftr a{color:var(--text2);text-decoration:none}
+.ftr a:hover{color:var(--accent)}
 
-@media(max-width:400px){
-.kpi-row{grid-template-columns:repeat(2,1fr)}
-.d-grid,.p2-d-grid{grid-template-columns:1fr}
-.res-grid{grid-template-columns:1fr}
-.mkt-grid{grid-template-columns:1fr}
+/* ── MOBILE ── */
+@media (max-width:640px){
+  .main{padding:20px 14px}
+  .stat-value{font-size:20px}
+  .project-hdr{flex-direction:column}
+  .ph-actions{width:100%}
+  .ph-actions .btn{flex:1;justify-content:center}
+}
+
+/* ── PRINT ── */
+@media print{
+  body{background:white;color:black}
+  .hdr,.hero,.ph-actions,.margin-card,.insights,.upload,.ftr,.hero,.help-card,.success-banner{display:none!important}
+  .section,.stat{background:white!important;border:1px solid #ccc!important;color:black!important;break-inside:avoid}
+  .project-hdr,.section-hdr,.type-hdr{background:#f5f5f5!important;color:black!important}
+  table.est th{background:#eee!important;color:black!important}
+  table.est td{color:black!important}
+  .price-input{border:none;background:transparent;color:black}
 }
 </style>
-
 </head>
 <body>
 
-<!-- ══════════════════════════════ СТРАНИЦА 1 ══════════════════════════════ -->
-
-<div id="page1">
-  <div class="p1-header">
-    <div class="logo-row">
-      <div class="logo-left">
-        <img class="logo-img" src="data:image/png;base64,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" alt="Теорема">
-        <div class="logo-tag"><strong>Уфа · 2026</strong>Коммерческая недвижимость</div>
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="brand">
+      <div class="brand-mark">К</div>
+      <div class="brand-txt">
+        <h1>СметаКровля AI</h1>
+        <p>Smart Roofing Estimator · v1.0</p>
       </div>
     </div>
-    <div class="kpi-row">
-      <div class="kpi"><div class="kpi-l">Ср. цена м²</div><div class="kpi-v">65K<em>₽</em></div></div>
-      <div class="kpi"><div class="kpi-l">Аренда м²</div><div class="kpi-v">900<em>₽</em></div></div>
-      <div class="kpi"><div class="kpi-l">Доходность</div><div class="kpi-v">8–12<em>%</em></div></div>
-      <div class="kpi"><div class="kpi-l">Окупаемость</div><div class="kpi-v">8–12<em>л</em></div></div>
+    <div class="hdr-actions">
+      <button class="btn btn-ghost btn-sm" onclick="resetApp()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        Новый проект
+      </button>
+      <button class="btn btn-ghost btn-sm" onclick="showAbout()">О сервисе</button>
     </div>
   </div>
+</header>
 
-  <div class="p1-tabs">
-    <div class="p1-tab active" data-tab="lots">Топ-10 лотов</div>
-    <div class="p1-tab" data-tab="calc">Калькулятор</div>
-    <div class="p1-tab" data-tab="market">Рынок</div>
-  </div>
+<!-- MAIN -->
+<main class="main">
 
-  <div class="p1-body">
-
-<!-- ЛОТЫ -->
-<div class="tp active" id="tp-lots">
-  <div class="chips">
-    <div class="chip active" data-filter="все">Все</div>
-    <div class="chip" data-filter="торговое">Торговое</div>
-    <div class="chip" data-filter="офис">Офис</div>
-    <div class="chip" data-filter="склад">Склад</div>
-    <div class="chip" data-filter="псн">ПСН</div>
-  </div>
-  <div id="det1"></div>
-  <div id="list1"></div>
-  <p class="note">* Нажмите на объект для расчёта. Данные: ЦИАН, Яндекс.Недвижимость, Этажи. Март 2026.</p>
-</div>
-
-<!-- КАЛЬКУЛЯТОР -->
-<div class="tp" id="tp-calc">
-  <div class="calc-card">
-    <div class="calc-title">Параметры объекта</div>
-    <div class="sl-row"><span class="sl-lbl">Стоимость</span><input type="range" id="cP" min="2000000" max="50000000" step="500000" value="8000000"><span class="sl-val" id="cPo">8 млн</span></div>
-    <div class="sl-row"><span class="sl-lbl">Площадь (м²)</span><input type="range" id="cA" min="20" max="500" step="5" value="80"><span class="sl-val" id="cAo">80 м²</span></div>
-    <div class="sl-row"><span class="sl-lbl">Аренда ₽/м²/мес</span><input type="range" id="cR" min="300" max="2500" step="50" value="900"><span class="sl-val" id="cRo">900 ₽</span></div>
-    <div class="sl-row"><span class="sl-lbl">Вакантность (%)</span><input type="range" id="cV" min="0" max="30" step="1" value="8"><span class="sl-val" id="cVo">8%</span></div>
-    <div class="sl-row"><span class="sl-lbl">Налог (%)</span><input type="range" id="cT" min="0" max="15" step="1" value="6"><span class="sl-val" id="cTo">6%</span></div>
-  </div>
-  <div class="res-grid">
-    <div class="res-card"><div class="res-lbl">Аренда / мес</div><div class="res-val" id="rMo">—</div></div>
-    <div class="res-card"><div class="res-lbl">Аренда / год (net)</div><div class="res-val" id="rYr">—</div></div>
-    <div class="res-card"><div class="res-lbl">Чистый доход/год</div><div class="res-val green" id="rNet">—</div></div>
-    <div class="res-card"><div class="res-lbl">Доходность</div><div class="res-val blue" id="rYld">—</div></div>
-    <div class="res-card"><div class="res-lbl">Окупаемость</div><div class="res-val" id="rPb">—</div></div>
-    <div class="res-card"><div class="res-lbl">Налог / год</div><div class="res-val amber" id="rTax">—</div></div>
-  </div>
-  <div class="comm-box"><div class="comm-lbl">Комиссия Теоремы</div><div class="comm-val" id="rComm">—</div><div class="comm-sub">3–5% от стоимости при покупке</div></div>
-  <div class="calc-card" style="margin-top:10px"><div class="calc-title">Динамика P&L (10 лет)</div><div class="chart-wrap"><canvas id="gChart"></canvas></div></div>
-</div>
-
-<!-- РЫНОК -->
-<div class="tp" id="tp-market">
-  <div class="mkt-grid">
-    <div class="mkt-card"><div class="mkt-l">Средняя цена м²</div><div class="mkt-v">55–75K ₽</div><div class="mkt-s">по сегментам</div></div>
-    <div class="mkt-card"><div class="mkt-l">Средняя аренда м²</div><div class="mkt-v">700–1500 ₽</div><div class="mkt-s">в месяц</div></div>
-    <div class="mkt-card"><div class="mkt-l">Объектов на рынке</div><div class="mkt-v">1 600+</div><div class="mkt-s">ЦИАН + Яндекс</div></div>
-    <div class="mkt-card"><div class="mkt-l">Диапазон сделок</div><div class="mkt-v">280K–450M</div><div class="mkt-s">₽</div></div>
-  </div>
-  <div class="seg-hdr">Доходность по сегментам</div>
-  <div class="seg-list">
-    <div class="seg-row"><div class="seg-dot" style="background:#3399FF"></div><span class="seg-name">Стрит-ритейл, центр</span><span class="seg-rent">1200–2000 ₽/м²</span><span class="seg-pct" style="color:#22C97B">10–13%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#5BADFF"></div><span class="seg-name">Торговое, спальный р-н</span><span class="seg-rent">700–1200 ₽/м²</span><span class="seg-pct" style="color:#22C97B">9–11%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#22C97B"></div><span class="seg-name">ПСН в новостройке</span><span class="seg-rent">800–1100 ₽/м²</span><span class="seg-pct" style="color:#F5A623">8–10%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#5EDFAA"></div><span class="seg-name">Офис класс B/B+</span><span class="seg-rent">700–1000 ₽/м²</span><span class="seg-pct" style="color:#F5A623">8–10%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#F5A623"></div><span class="seg-name">Офис класс A / БЦ</span><span class="seg-rent">1500–2000 ₽/м²</span><span class="seg-pct" style="color:#22C97B">9–12%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#D4832A"></div><span class="seg-name">Склад / производство</span><span class="seg-rent">300–600 ₽/м²</span><span class="seg-pct" style="color:#F5A623">7–10%</span></div>
-    <div class="seg-row"><div class="seg-dot" style="background:#FF5C5C"></div><span class="seg-name">Подвал / цоколь</span><span class="seg-rent">200–500 ₽/м²</span><span class="seg-pct" style="color:#FF5C5C">5–8%</span></div>
-  </div>
-  <div class="cm-box">
-    <div class="cm-hdr">Комиссия агента — рынок Уфы</div>
-    <div class="cm-grid">
-      <div><div class="cm-l">Покупка / продажа</div><div class="cm-v">3–5%</div><div class="cm-s">от суммы сделки</div></div>
-      <div><div class="cm-l">Аренда</div><div class="cm-v">50–100%</div><div class="cm-s">от 1 месяца аренды</div></div>
-    </div>
-  </div>
-  <div class="calc-card"><div class="calc-title">Доходность по сегментам (%)</div><div class="chart-wrap"><canvas id="mChart"></canvas></div></div>
-  <p class="note">Источники: ЦИАН, Яндекс.Недвижимость, Этажи, АкулаДвижение. Март 2026.</p>
-</div>
-```
-
-  </div><!-- /p1-body -->
-
-  <!-- ЗЕЛЁНАЯ КНОПКА ПАРСЕРА -->
-
-  <div class="parser-banner">
-    <button class="parser-btn" onclick="openParser()">
-      <span class="parser-btn-icon">⚡</span>
-      <span class="parser-btn-text">
-        <span class="parser-btn-main">Актуальные объекты <br>онлайн</span>
-        <span class="parser-btn-sub">Авито · ЦИАН · TG-каналы - обновление каждые 15 мин</span>
-      </span>
-      <span class="parser-btn-badge">LIVE</span>
-    </button>
-  </div>
-</div><!-- /page1 -->
-
-<!-- ══════════════════════════════ СТРАНИЦА 2 ══════════════════════════════ -->
-
-<div id="page2">
-  <div class="p2-header">
-    <div class="p2-logo-row">
-      <div class="p2-back" onclick="closeParsere()">← Назад</div>
-      <div class="p2-title-block">
-        <div class="p2-title">Парсер рынка</div>
-        <div class="p2-sub">Уфа · Башкирия</div>
+  <!-- UPLOAD VIEW -->
+  <div id="uploadView">
+    <div class="hero">
+      <h2>Расчёт сметы <span class="accent">за 3 секунды</span><br>вместо 3 часов</h2>
+      <p>Загружайте КП в формате Excel с заполненными объёмами — система автоматически подставит актуальные рыночные цены на материалы и работы. Параллельно можно открыть PDF-чертежи из AutoCAD для визуальной сверки количеств с планами.</p>
+      <div class="badges">
+        <span class="badge"><span class="dot"></span>База цен 2026 года</span>
+        <span class="badge"><span class="dot"></span>Технониколь, XPS, ПВХ-мембраны</span>
+        <span class="badge"><span class="dot"></span>Просмотр PDF-чертежей</span>
+        <span class="badge"><span class="dot"></span>Экспорт в Excel</span>
       </div>
-      <div class="live-badge"><div class="live-dot"></div>LIVE</div>
     </div>
-    <div class="p2-kpi">
-      <div class="p2-kpi-card"><div class="p2-kpi-l">Объектов в базе</div><div class="p2-kpi-v">143<em> шт</em></div></div>
-      <div class="p2-kpi-card"><div class="p2-kpi-l">Новых сегодня</div><div class="p2-kpi-v">12<em> шт</em></div></div>
-      <div class="p2-kpi-card"><div class="p2-kpi-l">Топ доходность</div><div class="p2-kpi-v">13.1<em>%</em></div></div>
-    </div>
-  </div>
 
-  <!-- ТИКЕР ОБНОВЛЕНИЯ -->
+    <div class="upload">
+      <div class="upload-dual">
+        <label class="dropzone" id="dropzone">
+          <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none">
+          <div class="dropzone-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff6b35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="8" y1="13" x2="16" y2="13"/>
+              <line x1="8" y1="17" x2="16" y2="17"/>
+            </svg>
+          </div>
+          <h3>Excel с объёмами работ</h3>
+          <p>Структура КП с колонками «Наименование», «Ед.изм.», «Кол-во»</p>
+          <div class="formats">
+            <span class="fmt">.xlsx</span>
+            <span class="fmt">.xls</span>
+            <span class="fmt">обязательно</span>
+          </div>
+        </label>
 
-  <div class="update-ticker">
-    <div class="ticker-dot"></div>
-    <span class="ticker-text">⚡ Парсер активен · данные обновляются в реальном времени · следующее обновление через 12 мин</span>
-    <div class="ticker-sources">
-      <span class="tsrc tsrc-tg">TG</span>
-      <span class="tsrc tsrc-av">Авито</span>
-      <span class="tsrc tsrc-ci">ЦИАН</span>
-    </div>
-  </div>
-
-  <div class="p2-filters">
-    <div class="p2-sort">
-      <div class="p2-sort-btn active" data-s="yield">По доходности ↓</div>
-      <div class="p2-sort-btn" data-s="score">По скорингу</div>
-      <div class="p2-sort-btn" data-s="date">Новые первые</div>
-      <div class="p2-sort-btn" data-s="price_asc">Дешевле</div>
-    </div>
-  </div>
-
-  <div class="p2-body">
-    <!-- БЕСПЛАТНЫЕ 3 ОБЪЕКТА -->
-    <div class="free-label">Доступно бесплатно — 3 объекта</div>
-    <div id="p2-detail"></div>
-    <div id="p2-free"></div>
-
-<!-- БЛЮР + ПЕЙВОЛЛ -->
-<div class="blur-section">
-  <div class="blur-cards" id="p2-blurred"></div>
-  <div class="paywall">
-    <div class="paywall-card">
-      <div class="paywall-icon">🔓</div>
-      <div class="paywall-title">Откройте все 143 объекта с расчётом доходности</div>
-      <div class="paywall-sub">Подпишитесь и получайте самые выгодные объекты раньше всех — прямо в Telegram</div>
-      <div class="paywall-features">
-        <div class="pf-row"><span class="pf-icon">⚡</span>143 объекта · обновление каждые 15 мин</div>
-        <div class="pf-row"><span class="pf-icon">📊</span>Автоматический расчёт доходности и скоринга</div>
-        <div class="pf-row"><span class="pf-icon">🔔</span>Push-уведомления о горячих объектах</div>
-        <div class="pf-row"><span class="pf-icon">🗺️</span>6 городов Башкирии</div>
-        <div class="pf-row"><span class="pf-icon">📱</span>TG-каналы + Авито + ЦИАН + Торги РФ</div>
+        <label class="dropzone" id="pdfDropzone">
+          <input type="file" id="pdfInput" accept=".pdf" style="display:none">
+          <div class="dropzone-icon" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(59,130,246,0.05))">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <path d="M10 12h1"/>
+              <path d="M10 16h4"/>
+            </svg>
+          </div>
+          <h3>PDF-чертежи (AutoCAD)</h3>
+          <p>План кровли, узлы, схемы — для визуальной верификации сметы</p>
+          <div class="formats">
+            <span class="fmt">.pdf</span>
+            <span class="fmt">А1, А2, А3, А4</span>
+            <span class="fmt">опционально</span>
+          </div>
+        </label>
       </div>
-      <div class="price-block">
-        <div class="price-main">15 000 ₽<span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.4)">/мес</span></div>
-        <div class="price-period">Первые 7 дней — бесплатно</div>
+
+      <div class="pdf-hint">
+        <strong>Зачем PDF?</strong> AutoCAD-чертежи выгружаются как векторная графика — автоматически извлечь из них м² невозможно (все размеры нарисованы как линии, а не числа). Но их можно <strong>показать рядом со сметой</strong>: в готовом проекте появится панель с планами, где вы визуально сверите количества (парапеты в п.м., количество воронок, площади типов кровли) с тем, что подставилось в расчёт.
       </div>
-      <button class="pay-btn" onclick="alert('Свяжитесь с нами: @teorema_ufa')">Попробовать бесплатно 7 дней</button>
-      <div class="pay-note">Отмена в любой момент · без привязки карты</div>
+
+      <div class="upload-actions">
+        <button class="btn btn-primary" onclick="loadDemo()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Посмотреть демо
+        </button>
+        <button class="btn" onclick="downloadTemplate()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Скачать шаблон
+        </button>
+      </div>
+
+      <div class="divider-text">Демо-объекты</div>
+      <div class="sample-grid">
+        <div class="sample-card" onclick="loadSample('kazan')">
+          <div class="type">Коммерческий · Казань</div>
+          <div class="name">Реконструкция клиники ГенБиоТех</div>
+          <div class="area">2 589 м² · 3 типа кровли · ~1200 т.₽</div>
+        </div>
+        <div class="sample-card" onclick="loadSample('warehouse')">
+          <div class="type">Промышленный · Москва</div>
+          <div class="name">Логистический центр класса A</div>
+          <div class="area">5 200 м² · 1 тип · ~8500 т.₽</div>
+        </div>
+        <div class="sample-card" onclick="loadSample('cottage')">
+          <div class="type">Частный сектор · МО</div>
+          <div class="name">Коттедж с мансардой</div>
+          <div class="area">180 м² · 1 тип · ~850 т.₽</div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- PROJECT VIEW -->
+  <div id="projectView" class="project">
+    <!-- filled dynamically -->
+  </div>
+
+</main>
+
+<!-- PDF PANEL -->
+<div class="pdf-panel" id="pdfPanel">
+  <div class="pdf-panel-hdr">
+    <h3>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Чертежи <span class="fn" id="pdfFilename"></span>
+    </h3>
+    <div class="pdf-ctrls">
+      <button onclick="zoomPdf(-0.15)" title="Уменьшить">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+      </button>
+      <span class="zoom" id="pdfZoom">100%</span>
+      <button onclick="zoomPdf(0.15)" title="Увеличить">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+      </button>
+      <button onclick="resetPdfZoom()" title="К размеру окна" style="width:auto;padding:0 10px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3z"/><path d="M14 14h7v7h-7z"/></svg>
+      </button>
+      <button class="pdf-close" onclick="togglePdfPanel(false)">Скрыть</button>
+    </div>
+  </div>
+  <div class="pdf-pages" id="pdfPages">
+    <div style="color:var(--text3);font-size:13px;text-align:center">Загрузите PDF-чертёж, чтобы увидеть его здесь</div>
   </div>
 </div>
 
-  </div>
-</div><!-- /page2 -->
+<button class="pdf-toggle-btn" id="pdfToggleBtn" onclick="togglePdfPanel(true)">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+  Чертежи <span class="count" id="pdfPagesCount">0</span>
+</button>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="spinner"></div>
+  <p id="loaderText">Анализирую файл...</p>
+</div>
+
+<!-- MODAL -->
+<div class="ovl" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="ftr">
+  СметаКровля AI · Все цены актуализированы на Q1 2026 · Встроенная база 58+ позиций<br>
+  <small>Ориентировочный расчёт. Для финальной сметы требуется замер объекта специалистом.</small>
+</footer>
 
 <script>
-const tg=window.Telegram?.WebApp;
-if(tg){tg.ready();tg.expand();}
+// ═══════════════════════════════════════════════════════════════════════════
+// PRICING DATABASE — реальные рыночные цены на Q1 2026 (Россия, Москва/Казань)
+// ═══════════════════════════════════════════════════════════════════════════
+const PRICES = {
+  materials: [
+    // Праймеры и подготовка
+    {keys:["праймер битумный","технониколь №1","праймер"],name:"Праймер битумный ТЕХНОНИКОЛЬ №1",unit:"кг",price:200},
+    {keys:["технобарьер"],name:"Технобарьер (пароизоляция)",unit:"м2",price:145},
+    // XPS Carbon Prof
+    {keys:["xps","carbon prof","100мм"],name:"XPS CARBON PROF 100мм",unit:"м3",price:8200,matchAll:["100"]},
+    {keys:["xps","carbon prof","50мм"],name:"XPS CARBON PROF 50мм",unit:"м3",price:8200,matchAll:["50"]},
+    {keys:["xps carbon prof slope","элемент а"],name:"XPS CARBON PROF SLOPE Элемент A",unit:"м3",price:10500},
+    {keys:["xps carbon prof slope","элемент в"],name:"XPS CARBON PROF SLOPE Элемент B",unit:"м3",price:10500},
+    {keys:["xps carbon prof slope","элемент j"],name:"XPS CARBON PROF SLOPE Элемент J",unit:"м3",price:10500},
+    {keys:["xps carbon prof slope","элемент к"],name:"XPS CARBON PROF SLOPE Элемент К",unit:"м3",price:10500},
+    // ЦПС и стяжка
+    {keys:["цементно-песчаная","цпс","м150"],name:"ЦПС М150",unit:"м3",price:6200},
+    // Битумные материалы
+    {keys:["унифлекс","вент эпв","унифлекс вент"],name:"Унифлекс ВЕНТ ЭПВ",unit:"м2",price:340},
+    {keys:["техноэласт","пламя стоп","экп"],name:"Техноэласт Пламя Стоп ЭКП",unit:"м2",price:520},
+    {keys:["техноэласт эпп","эпп"],name:"Техноэласт ЭПП",unit:"м3",price:340,altUnit:"м2"},
+    // Профнастил
+    {keys:["профилированный настил","профнастил","н75","н-75"],name:"Профнастил Н75-750",unit:"м2",price:1050},
+    // Паробарьер и разделение
+    {keys:["паробарьер","са500"],name:"Паробарьер СА500",unit:"м2",price:250},
+    {keys:["стеклохолст"],name:"Стеклохолст разделительный",unit:"м2",price:65},
+    // ПВХ-мембрана (стеммы для всех склонений)
+    {keys:["мембран","пвх"],name:"Мембрана ПВХ",unit:"м2",price:520},
+    // Доборы
+    {keys:["капельник","жесть","пвх-покрытием"],name:"Капельник жесть с ПВХ",unit:"м.пог.",price:450},
+    {keys:["компенсатор","оцинк"],name:"Компенсатор оцинк. сталь 0,7мм",unit:"м.пог.",price:420},
+    {keys:["мин.вата","минвата","в гофры"],name:"Мин.вата в гофры",unit:"м3",price:2600},
+    {keys:["встраиваемый лоток","лоток"],name:"Встраиваемый лоток оцинк.",unit:"м.пог.",price:2200},
+    {keys:["воронка","водоприёмная","водоприемная"],name:"Водоприёмная воронка",unit:"шт.",price:4500},
+    {keys:["прижимная рейка"],name:"Прижимная рейка",unit:"м.пог.",price:150},
+    {keys:["тротуарная плитка","плитка на опорах"],name:"Тротуарная плитка на опорах",unit:"м2",price:2400},
+    // Расходники
+    {keys:["пропан"],name:"Пропан (баллон)",unit:"баллон",price:2900},
+    {keys:["телескопический крепеж","крепеж"],name:"Телескопический крепёж",unit:"шт.",price:15},
+    {keys:["клей-пена","полиуретановая"],name:"Полиуретановая клей-пена",unit:"баллон",price:750},
+    {keys:["расходные материалы на мембрану"],name:"Расходники на мембрану",unit:"усл.ед.",price:95000},
+    {keys:["расходные материалы на наплавляйку"],name:"Расходники на наплавляйку",unit:"усл.ед.",price:58000},
+    {keys:["доставка"],name:"Доставка",unit:"усл.ед.",price:18500},
+    {keys:["грузоподъемные","механизмы","маш/ч"],name:"Грузоподъёмные механизмы",unit:"маш/ч",price:3200},
+    {keys:["вывоз мусора","утилизацией"],name:"Вывоз мусора с утилизацией",unit:"тн",price:5800}
+  ],
+  works: [
+    // Подготовка
+    {keys:["подготовка поверхности","огрунтовкой","праймером"],name:"Подготовка с огрунтовкой",unit:"м2",price:150},
+    // Пароизоляция
+    {keys:["устройство пароизоляции наплавляемой"],name:"Пароизоляция наплавляемая",unit:"м2",price:320},
+    {keys:["устройство пароизоляции оклеечной"],name:"Пароизоляция оклеечная",unit:"м2",price:220},
+    // Теплоизоляция
+    {keys:["устройство теплоизоляции","экструдированного утеплителя","150"],name:"Теплоизоляция XPS 150мм",unit:"м2",price:300},
+    {keys:["устройство уклонообразующего слоя","экструдированного"],name:"Уклонообразующий слой XPS",unit:"м2",price:420},
+    {keys:["устройство уклонообразующего слоя","стяжки"],name:"Уклонообразующая стяжка",unit:"м2",price:550},
+    // Стяжка
+    {keys:["устройство стяжки","галтелью"],name:"Стяжка М150 50мм с галтелью",unit:"м2",price:650},
+    // Гидроизоляция
+    {keys:["устройство гидроизоляции наплавляемой","два слоя"],name:"Гидроизоляция наплавляемая 2 слоя",unit:"м2",price:450},
+    {keys:["устройство узла наплавляемой гидроизоляции","примыканий"],name:"Узел гидроизоляции примыканий",unit:"м.пог.",price:750},
+    // ПВХ
+    {keys:["устройство гидроизоляции","мембраны пвх"],name:"Гидроизоляция ПВХ-мембрана",unit:"м2",price:550},
+    {keys:["устройство узла гидроизоляции примыканий","пвх","мембраны пвх"],name:"Узел ПВХ примыканий",unit:"м.пог.",price:900},
+    // Узлы
+    {keys:["устройство узла карнизного свеса","капельником"],name:"Карнизный свес с капельником",unit:"м.пог.",price:980},
+    {keys:["устройство узла карнизного свеса","внутренним желобом"],name:"Карнизный свес с внутр.желобом",unit:"м.пог.",price:1550},
+    {keys:["устройство узла конька"],name:"Узел конька",unit:"м.пог.",price:820},
+    // Профлист
+    {keys:["монтаж профлиста"],name:"Монтаж профлиста",unit:"м2",price:420},
+    // Разделительный
+    {keys:["укладка разделительного слоя","стеклохолст"],name:"Разделительный слой стеклохолст",unit:"м2",price:110},
+    // Финиш
+    {keys:["устройство тротуарной плитки","на опорах"],name:"Укладка плитки на опорах",unit:"м2",price:1050}
+  ]
+};
 
-// ══ ДАННЫЕ ══
-const lots=[
-  {name:'Торговое на Ленина',addr:'ул. Ленина, 52, 1 эт.',type:'торговое',area:58,price:7800000,rent:1400},
-  {name:'Офис в БЦ Капитал',addr:'ул. К. Маркса, 3б, 4 эт.',type:'офис',area:72,price:9500000,rent:1200},
-  {name:'ПСН ЖК Grand&Grand',addr:'б-р Ибрагимова, 90/2',type:'псн',area:55,price:6600000,rent:1000},
-  {name:'Стрит-ритейл Аксакова',addr:'ул. Аксакова, 91, 1 эт.',type:'торговое',area:42,price:5800000,rent:1500},
-  {name:'Офис БЦ Треугольник',addr:'ул. Пушкина, 86',type:'офис',area:95,price:11000000,rent:950},
-  {name:'Торговое Дагестанская',addr:'ул. Дагестанская, 15/1',type:'торговое',area:58,price:7200000,rent:1300},
-  {name:'Склад Нагаево',addr:'Нагаево, ул. Промышленная',type:'склад',area:350,price:15000000,rent:500},
-  {name:'ПСН ЖК Яркий',addr:'ул. Лесотехникума, 21',type:'псн',area:73,price:8100000,rent:900},
-  {name:'Офис Коммунистическая',addr:'ул. Коммунистическая, 45/3',type:'офис',area:36,price:4200000,rent:1800},
-  {name:'Цокольное Шумавцова',addr:'ул. Шумавцова, 13',type:'торговое',area:224,price:5421675,rent:480},
-];
+// ═══════════════════════════════════════════════════════════════════════════
+// SMART MATCHING — нечёткое сопоставление с БД
+// ═══════════════════════════════════════════════════════════════════════════
+function findPrice(itemName, type){
+  const db = type==="work" ? PRICES.works : PRICES.materials;
+  const lower = itemName.toLowerCase().replace(/[^\wа-яё\s\-\.]/gi,' ').replace(/\s+/g,' ').trim();
 
-const p2data=[
-  {id:1,name:'Офис Коммунистическая',addr:'ул. Коммунистическая, 45/3',type:'офис',area:36,price:4200000,rent:1800,src:'tg',isNew:true,score:97},
-  {id:2,name:'Стрит-ритейл Аксакова',addr:'ул. Аксакова, 91, 1 эт.',type:'торговое',area:42,price:5800000,rent:1500,src:'tg',isNew:true,score:95},
-  {id:3,name:'Торговое Российская',addr:'ул. Российская, 12/1',type:'торговое',area:48,price:6100000,rent:1350,src:'tg',isNew:true,score:88},
-  // BLURRED
-  {id:4,name:'Торговое на Ленина',addr:'ул. Ленина, 52, 1 эт.',type:'торговое',area:58,price:7800000,rent:1400,src:'cian',isNew:false,score:92},
-  {id:5,name:'Склад Сипайлово',addr:'ул. Комсомольская, 80',type:'склад',area:180,price:8500000,rent:600,src:'avito',isNew:true,score:73},
-  {id:6,name:'ПСН ЖК Grand&Grand',addr:'б-р Ибрагимова, 90/2',type:'псн',area:55,price:6600000,rent:1000,src:'avito',isNew:false,score:71},
-];
-
-const fmt=n=>Math.round(n).toLocaleString('ru-RU');
-const fmtM=n=>(n/1e6).toFixed(2)+' млн ₽';
-function cy(o){const ry=o.rent*o.area*12*0.92;const tax=ry*0.06;const net=ry-tax;return{ry,tax,net,yld:net/o.price*100,pb:o.price/net}}
-function sc(s){return s>=85?'#22C97B':s>=65?'#F5A623':'#FF5C5C'}
-function srcCls(s){return s==='tg'?'sp-tg':s==='avito'?'sp-av':'sp-ci'}
-function srcLbl(s){return s==='tg'?'TG':s==='avito'?'Авито':'ЦИАН'}
-
-// ══ СТРАНИЦА 1 ══
-let p1filt='все', p1sel=-1;
-
-function renderList1(){
-  const fl=lots.filter(l=>p1filt==='все'||l.type===p1filt);
-  document.getElementById('list1').innerHTML=fl.map((l,i)=>{
-    const ri=lots.indexOf(l);
-    const{yld}=cy(l);
-    const yc=yld>=10?'yg':yld>=8?'ym':'yl';
-    return`<div class="lot-card type-${l.type}${ri===p1sel?' sel':''}" onclick="selLot1(${ri})">
-      <div class="card-top"><div><div class="card-name">${l.name}</div><div class="card-addr">${l.addr}</div></div>
-      <div class="yield-pill ${yc}">${yld.toFixed(1)}%</div></div>
-      <div class="card-meta"><span class="badge badge-${l.type}">${l.type}</span>
-      <span class="mi"><strong>${fmt(l.area)} м²</strong></span>
-      <span class="mi"><strong>${fmtM(l.price)}</strong></span>
-      <span class="mi">${fmt(l.rent*l.area)} ₽/мес</span></div>
-    </div>`;
-  }).join('');
+  let best = null, bestScore = 0;
+  for(const entry of db){
+    let score = 0;
+    for(const k of entry.keys){
+      if(lower.includes(k.toLowerCase())) score += k.length;
+    }
+    // Bonus for specific matches like "100мм", "50мм"
+    if(entry.matchAll){
+      const allMatch = entry.matchAll.every(m => lower.includes(m.toLowerCase()));
+      if(allMatch) score += 10;
+      else continue;
+    }
+    if(score > bestScore){ bestScore = score; best = entry; }
+  }
+  return best && bestScore>=4 ? {price: best.price, matched: best.name, confidence: bestScore>=8?"high":"medium"} : null;
 }
 
-function selLot1(i){
-  if(tg?.HapticFeedback)tg.HapticFeedback.selectionChanged();
-  p1sel=i===p1sel?-1:i;renderDet1();renderList1();
+// ═══════════════════════════════════════════════════════════════════════════
+// EXCEL PARSER
+// ═══════════════════════════════════════════════════════════════════════════
+function parseExcel(arrayBuffer){
+  const wb = XLSX.read(arrayBuffer,{type:"array"});
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(ws,{header:1,defval:null,raw:false});
+
+  const result = {
+    objectName: "Объект",
+    kpNumber: "",
+    kpDate: "",
+    types: [], // [{label:"1 тип",items:[...]}]
+    materials: [],
+    warranty: "5 лет",
+    timeline: "45 календарных дней"
+  };
+
+  let mode = null; // "type" | "materials"
+  let currentType = null;
+  let foundObjectLine = false;
+
+  for(let i=0;i<rows.length;i++){
+    const row = rows[i];
+    const joined = row.map(c=>c==null?"":String(c).trim()).filter(Boolean).join(" ");
+    if(!joined) continue;
+
+    // КП номер
+    const kpMatch = joined.match(/КП\s*№\s*([\w\-]+)/i);
+    if(kpMatch && !result.kpNumber) result.kpNumber = kpMatch[1];
+    const dateMatch = joined.match(/от\s+(\d{1,2}[\.\-\/]\d{1,2}[\.\-\/]\d{2,4})/i);
+    if(dateMatch && !result.kpDate) result.kpDate = dateMatch[1];
+
+    // Объект
+    if(joined.toLowerCase().startsWith("объект:")){
+      result.objectName = joined.replace(/^объект:\s*/i,"").trim();
+      foundObjectLine = true;
+      continue;
+    }
+
+    // Тип кровли (1 тип, 2 тип, 3 тип...)
+    const typeMatch = joined.match(/^(\d+)\s*тип\s*$/i);
+    if(typeMatch){
+      currentType = {label:`${typeMatch[1]} тип кровли`,num:+typeMatch[1],items:[],area:null};
+      result.types.push(currentType);
+      mode = "type";
+      continue;
+    }
+
+    // Секция материалов
+    if(joined.toLowerCase().includes("наименование материала")){
+      mode = "materials";
+      continue;
+    }
+
+    // Итого по работам (переход между типами)
+    if(joined.toLowerCase().includes("итого по работам") && joined.toLowerCase().includes("тип")){
+      // После "Итого по работам N тип" следующий тип будет определён по "N тип"
+      continue;
+    }
+
+    if(joined.toLowerCase().includes("итого по работам")) continue;
+    if(joined.toLowerCase().includes("итого по материалам")) continue;
+    if(joined.toLowerCase().includes("всего стоимость")) continue;
+
+    // Заголовок таблицы
+    if(joined.toLowerCase().includes("наименование услуги")){
+      mode = "type";
+      continue;
+    }
+
+    // Парсинг строк с данными
+    // Формат: [_, _, Наименование, _, _, Ед.изм., Кол-во, Цена, Стоимость, _, _]
+    const name = row[2];
+    const unit = row[5];
+    const qty = row[6];
+
+    if(name && unit && qty!=null){
+      const qtyNum = parseFloat(String(qty).replace(",","."));
+      if(isNaN(qtyNum)) continue;
+      if(String(name).toLowerCase().includes("итого")) continue;
+      if(String(name).toLowerCase().includes("всего")) continue;
+
+      const item = {
+        name: String(name).trim(),
+        unit: String(unit).trim(),
+        qty: qtyNum,
+        price: 0,
+        total: 0,
+        source: "unknown"
+      };
+
+      // Автоподбор цены
+      const kind = mode==="materials" ? "material" : "work";
+      const found = findPrice(item.name, kind);
+      if(found){
+        item.price = found.price;
+        item.total = +(item.qty * item.price).toFixed(2);
+        item.source = "auto";
+      }
+
+      if(mode==="materials"){
+        result.materials.push(item);
+      } else if(currentType){
+        currentType.items.push(item);
+      }
+    }
+  }
+
+  // Определить площадь каждого типа по первому элементу с м2
+  for(const t of result.types){
+    const first = t.items.find(x=>x.unit==="м2");
+    if(first) t.area = first.qty;
+  }
+
+  if(!result.objectName || result.objectName==="Объект"){
+    result.objectName = "Кровельный объект";
+  }
+
+  return result;
 }
 
-function renderDet1(){
-  const dc=document.getElementById('det1');
-  if(p1sel===-1){dc.innerHTML='';return}
-  const l=lots[p1sel];const{ry,tax,net,yld,pb}=cy(l);
-  const yc=yld>=10?'grn':yld>=8?'amb':'';
-  dc.innerHTML=`<div class="detail"><div class="detail-title">${l.name} · ${l.addr}</div>
-    <div class="d-grid"><div>
-      <div class="d-row"><span class="d-key">Стоимость</span><span class="d-val">${fmtM(l.price)}</span></div>
-      <div class="d-row"><span class="d-key">Площадь</span><span class="d-val">${fmt(l.area)} м²</span></div>
-      <div class="d-row"><span class="d-key">Цена м²</span><span class="d-val">${fmt(l.price/l.area)} ₽</span></div>
-      <div class="d-row"><span class="d-key">Аренда/год</span><span class="d-val">${fmt(ry)} ₽</span></div>
-    </div><div>
-      <div class="d-row"><span class="d-key">Налог УСН 6%</span><span class="d-val amb">${fmt(tax)} ₽</span></div>
-      <div class="d-row"><span class="d-key">Чистый доход</span><span class="d-val grn">${fmt(net)} ₽/г</span></div>
-      <div class="d-row"><span class="d-key">Доходность</span><span class="d-val ${yc}">${yld.toFixed(2)}%</span></div>
-      <div class="d-row"><span class="d-key">Окупаемость</span><span class="d-val">${pb.toFixed(1)} лет</span></div>
-    </div></div>
-    <div class="comm-box"><div class="comm-lbl">Комиссия Теоремы</div>
-    <div class="comm-val">${fmt(l.price*.03)} – ${fmt(l.price*.05)} ₽</div>
-    <div class="comm-sub">3–5% · юр. проверка + сопровождение</div></div>
-  </div>`;
+// ═══════════════════════════════════════════════════════════════════════════
+// DEMO DATA
+// ═══════════════════════════════════════════════════════════════════════════
+const DEMO = {
+  kazan: {
+    objectName: "Реконструкция здания Республиканского клинического противотуберкулезного диспансера под размещение комплекса лабораторий «ГенБиоТех», г. Казань, пер. Лесопарковый, з/У 21",
+    kpNumber: "К-1504-2",
+    kpDate: "15.04.2026",
+    warranty: "5 лет",
+    timeline: "45 календарных дней",
+    types:[
+      {label:"1 тип кровли",num:1,area:1311,items:[
+        {name:"Подготовка поверхности с огрунтовкой праймером",unit:"м2",qty:1311},
+        {name:"Устройство пароизоляции наплавляемой",unit:"м2",qty:1311},
+        {name:"Устройство теплоизоляции из экструдированного утеплителя 150 мм",unit:"м2",qty:1311},
+        {name:"Устройство уклонообразующего слоя из экструдированного утеплителя 10-260 мм",unit:"м2",qty:1311},
+        {name:"Устройство стяжки М150 50 мм с галтелью 100х100 мм",unit:"м2",qty:1311},
+        {name:"Устройство гидроизоляции наплавляемой в два слоя",unit:"м2",qty:1311},
+        {name:"Устройство узла наплавляемой гидроизоляции примыканий в два слоя",unit:"м.пог.",qty:360}
+      ]},
+      {label:"2 тип кровли",num:2,area:1167,items:[
+        {name:"Монтаж профлиста",unit:"м2",qty:1167},
+        {name:"Устройство пароизоляции оклеечной",unit:"м2",qty:1167},
+        {name:"Устройство теплоизоляции из экструдированного утеплителя 150 мм",unit:"м2",qty:1167},
+        {name:"Укладка разделительного слоя стеклохолст",unit:"м2",qty:1167},
+        {name:"Устройство гидроизоляции из мембраны ПВХ",unit:"м2",qty:1167},
+        {name:"Устройство узла гидроизоляции примыканий из мембраны ПВХ",unit:"м.пог.",qty:193},
+        {name:"Устройство узла карнизного свеса с капельником",unit:"м.пог.",qty:100},
+        {name:"Устройство узла конька",unit:"м.пог.",qty:95},
+        {name:"Устройство узла карнизного свеса с внутренним желобом водостока",unit:"м.пог.",qty:90}
+      ]},
+      {label:"3 тип кровли",num:3,area:111,items:[
+        {name:"Подготовка поверхности с огрунтовкой праймером",unit:"м2",qty:111},
+        {name:"Устройство пароизоляции наплавляемой",unit:"м2",qty:111},
+        {name:"Устройство теплоизоляции из экструдированного утеплителя 150 мм",unit:"м2",qty:111},
+        {name:"Устройство уклонообразующего слоя из стяжки М150 30-120 мм с галтелью 100х100 мм",unit:"м2",qty:111},
+        {name:"Устройство гидроизоляции наплавляемой в два слоя",unit:"м2",qty:111},
+        {name:"Устройство узла наплавляемой гидроизоляции примыканий в два слоя",unit:"м.пог.",qty:23},
+        {name:"Устройство тротуарной плитки на опорах",unit:"м2",qty:111}
+      ]}
+    ],
+    materials:[
+      {name:"Праймер битумный ТЕХНОНИКОЛЬ №1, ведро 20л (16кг)",unit:"кг",qty:464},
+      {name:"Технобарьер",unit:"м2",qty:1899},
+      {name:"XPS ТЕХНОНИКОЛЬ CARBON PROF 100мм",unit:"м3",qty:275.37},
+      {name:"XPS ТЕХНОНИКОЛЬ CARBON PROF 50мм",unit:"м3",qty:337.3},
+      {name:"XPS CARBON PROF SLOPE 2,1% Элемент А",unit:"м3",qty:18.56},
+      {name:"XPS CARBON PROF SLOPE 2,1% Элемент В",unit:"м3",qty:46.69},
+      {name:"XPS CARBON PROF SLOPE 2,1% Элемент J",unit:"м3",qty:6.38},
+      {name:"XPS CARBON PROF SLOPE 2,1% Элемент К",unit:"м3",qty:8.07},
+      {name:"Цементно-песчаная смесь (ЦПС) М150",unit:"м3",qty:81},
+      {name:"Унифлекс ВЕНТ ЭПВ",unit:"м2",qty:1743},
+      {name:"Техноэласт Пламя Стоп ЭКП сланец серый",unit:"м2",qty:1743},
+      {name:"Техноэласт ЭПП",unit:"м3",qty:312},
+      {name:"Профилированный настил Н75-750-0,9-75мм",unit:"м2",qty:1284},
+      {name:"Паробарьер СА500",unit:"м2",qty:1450},
+      {name:"Стеклохолст",unit:"м2",qty:1350},
+      {name:"Устройство гидроизоляции из мембраны ПВХ",unit:"м2",qty:1450},
+      {name:"Капельник из жести с ПВХ-покрытием",unit:"м.пог.",qty:100},
+      {name:"Компенсатор из оцинк. стали t=0,7мм",unit:"м.пог.",qty:95},
+      {name:"Мин.вата в гофры",unit:"м3",qty:47},
+      {name:"Встраиваемый лоток из оцинк. стали",unit:"м.пог.",qty:90},
+      {name:"Водоприёмная воронка",unit:"шт.",qty:13},
+      {name:"Прижимная рейка",unit:"м.пог.",qty:664.4},
+      {name:"Тротуарная плитка на опорах",unit:"м.пог.",qty:111},
+      {name:"Пропан",unit:"баллон",qty:57},
+      {name:"Телескопический крепеж",unit:"шт.",qty:24128},
+      {name:"Полиуретановая клей-пена",unit:"баллон",qty:110},
+      {name:"Расходные материалы на мембрану",unit:"усл.ед.",qty:1},
+      {name:"Расходные материалы на наплавляйку",unit:"усл.ед.",qty:1},
+      {name:"Доставка",unit:"усл.ед.",qty:5},
+      {name:"Грузоподъемные механизмы",unit:"маш/ч",qty:96},
+      {name:"Вывоз мусора с утилизацией",unit:"тн",qty:5}
+    ]
+  },
+  warehouse: {
+    objectName: "Логистический центр класса A, г. Москва, Симферопольское ш.",
+    kpNumber: "К-2034-1",
+    kpDate: "20.04.2026",
+    warranty: "10 лет",
+    timeline: "90 календарных дней",
+    types:[
+      {label:"1 тип кровли",num:1,area:5200,items:[
+        {name:"Монтаж профлиста",unit:"м2",qty:5200},
+        {name:"Устройство пароизоляции оклеечной",unit:"м2",qty:5200},
+        {name:"Устройство теплоизоляции из экструдированного утеплителя 150 мм",unit:"м2",qty:5200},
+        {name:"Укладка разделительного слоя стеклохолст",unit:"м2",qty:5200},
+        {name:"Устройство гидроизоляции из мембраны ПВХ",unit:"м2",qty:5200},
+        {name:"Устройство узла гидроизоляции примыканий из мембраны ПВХ",unit:"м.пог.",qty:480}
+      ]}
+    ],
+    materials:[
+      {name:"Профилированный настил Н75-750-0,9-75мм",unit:"м2",qty:5720},
+      {name:"Паробарьер СА500",unit:"м2",qty:5460},
+      {name:"XPS ТЕХНОНИКОЛЬ CARBON PROF 100мм",unit:"м3",qty:780},
+      {name:"Стеклохолст",unit:"м2",qty:5460},
+      {name:"Мембрана ПВХ",unit:"м2",qty:5460},
+      {name:"Телескопический крепеж",unit:"шт.",qty:42000},
+      {name:"Доставка",unit:"усл.ед.",qty:8},
+      {name:"Грузоподъемные механизмы",unit:"маш/ч",qty:240}
+    ]
+  },
+  cottage: {
+    objectName: "Коттедж с мансардой, Московская обл., Истринский р-н",
+    kpNumber: "К-1875-3",
+    kpDate: "18.04.2026",
+    warranty: "5 лет",
+    timeline: "21 календарный день",
+    types:[
+      {label:"1 тип кровли",num:1,area:180,items:[
+        {name:"Подготовка поверхности с огрунтовкой праймером",unit:"м2",qty:180},
+        {name:"Устройство пароизоляции наплавляемой",unit:"м2",qty:180},
+        {name:"Устройство теплоизоляции из экструдированного утеплителя 150 мм",unit:"м2",qty:180},
+        {name:"Устройство стяжки М150 50 мм с галтелью 100х100 мм",unit:"м2",qty:180},
+        {name:"Устройство гидроизоляции наплавляемой в два слоя",unit:"м2",qty:180},
+        {name:"Устройство узла наплавляемой гидроизоляции примыканий в два слоя",unit:"м.пог.",qty:54}
+      ]}
+    ],
+    materials:[
+      {name:"Праймер битумный ТЕХНОНИКОЛЬ №1",unit:"кг",qty:64},
+      {name:"Технобарьер",unit:"м2",qty:200},
+      {name:"XPS ТЕХНОНИКОЛЬ CARBON PROF 100мм",unit:"м3",qty:27},
+      {name:"ЦПС М150",unit:"м3",qty:11},
+      {name:"Унифлекс ВЕНТ ЭПВ",unit:"м2",qty:240},
+      {name:"Техноэласт Пламя Стоп ЭКП",unit:"м2",qty:240},
+      {name:"Пропан",unit:"баллон",qty:8},
+      {name:"Доставка",unit:"усл.ед.",qty:2}
+    ]
+  }
+};
+
+// Apply auto-pricing to demo
+function applyPricing(project){
+  for(const t of project.types){
+    for(const item of t.items){
+      if(item.price) continue;
+      const m = findPrice(item.name,"work");
+      if(m){ item.price = m.price; item.total = +(item.qty*m.price).toFixed(2); item.source="auto"; }
+      else { item.price = 0; item.total = 0; item.source = "unknown"; }
+    }
+  }
+  for(const item of project.materials){
+    if(item.price) continue;
+    const m = findPrice(item.name,"material");
+    if(m){ item.price = m.price; item.total = +(item.qty*m.price).toFixed(2); item.source="auto"; }
+    else { item.price = 0; item.total = 0; item.source = "unknown"; }
+  }
+  return project;
 }
 
-document.querySelectorAll('.chip[data-filter]').forEach(c=>{
-  c.addEventListener('click',()=>{
-    if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
-    p1filt=c.dataset.filter;p1sel=-1;
-    document.getElementById('det1').innerHTML='';
-    document.querySelectorAll('.chip[data-filter]').forEach(x=>x.classList.remove('active'));
-    c.classList.add('active');renderList1();
-  });
-});
+// ═══════════════════════════════════════════════════════════════════════════
+// STATE & RENDERING
+// ═══════════════════════════════════════════════════════════════════════════
+let state = { project: null, margin: 20, vat: 20 };
 
-document.querySelectorAll('.p1-tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
-    document.querySelectorAll('.p1-tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.tp').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById('tp-'+t.dataset.tab).classList.add('active');
-    if(t.dataset.tab==='calc')setTimeout(calcC,60);
-    if(t.dataset.tab==='market')setTimeout(mktC,60);
-  });
-});
-renderList1();
+const fmt = n => Math.round(Number(n)||0).toLocaleString("ru-RU");
+const fmtD = n => { const v = Number(n)||0; return v.toLocaleString("ru-RU",{minimumFractionDigits:2,maximumFractionDigits:2}); };
 
-// CALC
-let gI=null;
-function calcC(){
-  const P=+document.getElementById('cP').value,A=+document.getElementById('cA').value;
-  const R=+document.getElementById('cR').value,V=+document.getElementById('cV').value/100;
-  const T=+document.getElementById('cT').value/100;
-  document.getElementById('cPo').textContent=(P/1e6).toFixed(1)+' млн';
-  document.getElementById('cAo').textContent=A+' м²';
-  document.getElementById('cRo').textContent=R+' ₽';
-  document.getElementById('cVo').textContent=document.getElementById('cV').value+'%';
-  document.getElementById('cTo').textContent=document.getElementById('cT').value+'%';
-  const mo=R*A,yr=mo*12*(1-V),tax=yr*T,net=yr-tax,yld=net/P*100,pb=P/net;
-  document.getElementById('rMo').textContent=fmt(mo)+' ₽';
-  document.getElementById('rYr').textContent=fmt(yr)+' ₽';
-  document.getElementById('rNet').textContent=fmt(net)+' ₽';
-  document.getElementById('rYld').textContent=yld.toFixed(2)+'%';
-  document.getElementById('rPb').textContent=pb.toFixed(1)+' лет';
-  document.getElementById('rTax').textContent=fmt(tax)+' ₽';
-  document.getElementById('rComm').textContent=fmt(P*.03)+' – '+fmt(P*.05)+' ₽';
-  const data=Array.from({length:11},(_,i)=>Math.round(-P+net*i));
-  if(gI)gI.destroy();
-  gI=new Chart(document.getElementById('gChart'),{type:'line',
-    data:{labels:Array.from({length:11},(_,i)=>i+'г'),datasets:[{data,borderColor:'#3399FF',backgroundColor:'rgba(51,153,255,0.07)',fill:true,tension:.35,pointRadius:3,pointBackgroundColor:data.map(v=>v>=0?'#22C97B':'#FF5C5C')}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{y:{ticks:{callback:v=>(v/1e6).toFixed(1)+'M',color:'#999',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},
-              x:{ticks:{color:'#999',font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}}}}});
-}
-['cP','cA','cR','cV','cT'].forEach(id=>document.getElementById(id).addEventListener('input',calcC));
-calcC();
-
-let mI=null;
-function mktC(){
-  if(mI)mI.destroy();
-  mI=new Chart(document.getElementById('mChart'),{type:'bar',
-    data:{labels:['Стрит-р.','Торг.сп.','ПСН','Офис B','Офис A','Склад','Цоколь'],
-      datasets:[{label:'Мин%',data:[10,9,8,8,9,7,5],backgroundColor:'rgba(51,153,255,0.5)',borderRadius:4},
-                {label:'Макс%',data:[13,11,10,10,12,10,8],backgroundColor:'rgba(51,153,255,0.18)',borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{y:{min:0,max:15,ticks:{callback:v=>v+'%',color:'#999',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},
-              x:{ticks:{color:'#999',font:{size:10},maxRotation:25},grid:{display:false}}}}});
+function totalsForProject(p){
+  let worksTotal = 0, matTotal = 0;
+  const perType = [];
+  for(const t of p.types){
+    const s = t.items.reduce((a,x)=>a+(x.total||0),0);
+    perType.push({label:t.label,num:t.num,total:s,area:t.area});
+    worksTotal += s;
+  }
+  matTotal = p.materials.reduce((a,x)=>a+(x.total||0),0);
+  const subtotal = worksTotal + matTotal;
+  const vat = subtotal * (state.vat/100);
+  const withVat = subtotal; // already incl VAT in retail context — treat as gross
+  const totalArea = p.types.reduce((a,t)=>a+(t.area||0),0);
+  const unknownCount = [
+    ...p.types.flatMap(t=>t.items),
+    ...p.materials
+  ].filter(x=>x.source==="unknown").length;
+  const autoCount = [
+    ...p.types.flatMap(t=>t.items),
+    ...p.materials
+  ].filter(x=>x.source==="auto").length;
+  return {worksTotal,matTotal,subtotal,perType,totalArea,unknownCount,autoCount};
 }
 
-// ══ СТРАНИЦА 2 ══
-let p2sort='yield', p2sel=-1;
+function render(){
+  if(!state.project){
+    document.getElementById("uploadView").style.display="block";
+    document.getElementById("projectView").classList.remove("active");
+    return;
+  }
+  document.getElementById("uploadView").style.display="none";
+  document.getElementById("projectView").classList.add("active");
 
-function openParser(){
-  if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('medium');
-  document.getElementById('page1').style.display='none';
-  document.getElementById('page2').style.display='block';
-  if(tg)tg.setHeaderColor('#0D1525');
-  window.scrollTo(0,0);
-  renderP2();
-}
-function closeParsere(){
-  if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
-  document.getElementById('page2').style.display='none';
-  document.getElementById('page1').style.display='block';
-  if(tg)tg.setHeaderColor('#0A0F1A');
-  window.scrollTo(0,0);
-}
+  const p = state.project;
+  const t = totalsForProject(p);
+  const priceWithMargin = Math.round(t.subtotal * (1 + state.margin/100));
+  const profit = priceWithMargin - t.subtotal;
+  const pricePerM2 = t.totalArea ? Math.round(priceWithMargin / t.totalArea) : 0;
 
-function renderP2card(o){
-  const{yld}=cy(o);
-  const yc=yld>=10?'yg':yld>=8?'ym':'yl';
-  const color=sc(o.score);
-  return`<div class="p2-card type-${o.type}${p2sel===o.id?' sel':''}${o.isNew?' new-obj':''}" onclick="selP2(${o.id})">
-    <div class="card-top"><div><div class="card-name">${o.name}</div><div class="card-addr">${o.addr}</div></div>
-    <div class="yield-pill ${yc}">${yld.toFixed(1)}%</div></div>
-    <div class="card-meta"><span class="badge badge-${o.type}">${o.type}</span>
-    <span class="mi"><strong>${fmt(o.area)} м²</strong></span>
-    <span class="mi"><strong>${fmtM(o.price)}</strong></span>
-    <span class="src-pill ${srcCls(o.src)}">${srcLbl(o.src)}</span></div>
-    <div class="score-row"><span class="score-lbl">Скоринг</span>
-    <div class="score-bg"><div class="score-fill" style="width:${o.score}%;background:${color}"></div></div>
-    <span class="score-num" style="color:${color}">${o.score}</span></div>
-  </div>`;
-}
+  const v = document.getElementById("projectView");
+  v.innerHTML = `
+    ${t.unknownCount>0 ? `
+      <div class="help-card">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div>Для <strong>${t.unknownCount}</strong> позиций не нашлось автоматического совпадения в базе — укажите цены вручную в жёлтых полях. Авто-распознано: <strong>${t.autoCount}</strong> позиций.</div>
+      </div>
+    ` : `
+      <div class="success-banner">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="text"><strong>Все ${t.autoCount} позиций распознаны автоматически.</strong> При необходимости цены можно скорректировать в полях ввода.</div>
+      </div>
+    `}
 
-function renderP2(){
-  let free=[...p2data.slice(0,3)];
-  if(p2sort==='yield')free.sort((a,b)=>cy(b).yld-cy(a).yld);
-  else if(p2sort==='score')free.sort((a,b)=>b.score-a.score);
-  else if(p2sort==='date')free.sort((a,b)=>(b.isNew?1:0)-(a.isNew?1:0));
-  else if(p2sort==='price_asc')free.sort((a,b)=>a.price-b.price);
-  document.getElementById('p2-free').innerHTML=free.map(o=>renderP2card(o)).join('');
-  // blurred
-  document.getElementById('p2-blurred').innerHTML=p2data.slice(3).map(o=>renderP2card(o)).join('');
-}
-
-function selP2(id){
-  if(tg?.HapticFeedback)tg.HapticFeedback.selectionChanged();
-  p2sel=p2sel===id?-1:id;
-  renderP2det();renderP2();
-}
-
-function renderP2det(){
-  const dc=document.getElementById('p2-detail');
-  if(p2sel===-1){dc.innerHTML='';return}
-  const o=p2data.find(x=>x.id===p2sel);
-  if(!o){dc.innerHTML='';return}
-  const{ry,tax,net,yld,pb}=cy(o);
-  const yc=yld>=10?'grn':yld>=8?'amb':'';
-  const color=sc(o.score);
-  dc.innerHTML=`<div class="p2-detail">
-    <div class="p2-det-title">${o.name} · ${o.addr}</div>
-    <div class="p2-d-grid"><div>
-      <div class="p2-d-row"><span class="p2-d-key">Стоимость</span><span class="p2-d-val">${fmtM(o.price)}</span></div>
-      <div class="p2-d-row"><span class="p2-d-key">Площадь</span><span class="p2-d-val">${fmt(o.area)} м²</span></div>
-      <div class="p2-d-row"><span class="p2-d-key">Аренда/год</span><span class="p2-d-val">${fmt(ry)} ₽</span></div>
-      <div class="p2-d-row"><span class="p2-d-key">Налог УСН 6%</span><span class="p2-d-val amb">${fmt(tax)} ₽</span></div>
-    </div><div>
-      <div class="p2-d-row"><span class="p2-d-key">Чистый доход</span><span class="p2-d-val grn">${fmt(net)} ₽/г</span></div>
-      <div class="p2-d-row"><span class="p2-d-key">Доходность</span><span class="p2-d-val ${yc}">${yld.toFixed(2)}%</span></div>
-      <div class="p2-d-row"><span class="p2-d-key">Окупаемость</span><span class="p2-d-val">${pb.toFixed(1)} лет</span></div>
-      <div class="p2-d-row"><span class="p2-d-key">Цена м²</span><span class="p2-d-val">${fmt(o.price/o.area)} ₽</span></div>
-    </div></div>
-    <div class="score-row" style="margin-bottom:10px">
-      <span class="score-lbl" style="color:rgba(238,244,255,0.3);font-size:11px">Скоринг</span>
-      <div class="score-bg" style="background:rgba(255,255,255,0.08)"><div class="score-fill" style="width:${o.score}%;background:${color}"></div></div>
-      <span class="score-num" style="color:${color};font-size:13px">${o.score}/100</span>
+    <div class="project-hdr">
+      <div class="ph-info">
+        <h2>${p.objectName}</h2>
+        <div class="meta">
+          ${p.kpNumber?`<span><span class="k">КП</span> №${p.kpNumber}</span>`:""}
+          ${p.kpDate?`<span><span class="k">от</span> ${p.kpDate}</span>`:""}
+          <span><span class="k">Площадь:</span> ${fmt(t.totalArea)} м²</span>
+          <span><span class="k">Типов кровли:</span> ${p.types.length}</span>
+          ${p.warranty?`<span><span class="k">Гарантия:</span> ${p.warranty}</span>`:""}
+          ${p.timeline?`<span><span class="k">Срок:</span> ${p.timeline}</span>`:""}
+        </div>
+      </div>
+      <div class="ph-actions">
+        <button class="btn" onclick="exportExcel()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Excel
+        </button>
+        <button class="btn" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Печать / PDF
+        </button>
+        <button class="btn btn-primary" onclick="copyShortSummary()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Копировать итог
+        </button>
+      </div>
     </div>
-    <div class="p2-comm"><div class="p2-comm-lbl">Комиссия Теоремы</div>
-    <div class="p2-comm-val">${fmt(o.price*.03)} – ${fmt(o.price*.05)} ₽</div>
-    <div class="p2-comm-sub">3–5% · юр. проверка + сопровождение сделки</div></div>
-    ${o.score>=85?`<div class="hot-box"><div class="hot-lbl">⚡ Горячий объект</div><div class="hot-txt">Скоринг ${o.score}/100 — высокая вероятность выгодной сделки</div></div>`:''}
-  </div>`;
+
+    <div class="stats">
+      <div class="stat blue">
+        <div class="stat-label">Работы</div>
+        <div class="stat-value">${fmt(t.worksTotal)}<small> ₽</small></div>
+        <div class="stat-sub">по ${p.types.length} типам кровли</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Материалы</div>
+        <div class="stat-value">${fmt(t.matTotal)}<small> ₽</small></div>
+        <div class="stat-sub">${p.materials.length} позиций</div>
+      </div>
+      <div class="stat ok">
+        <div class="stat-label">Итого себестоимость</div>
+        <div class="stat-value">${fmt(t.subtotal)}<small> ₽</small></div>
+        <div class="stat-sub">с НДС ${state.vat}%</div>
+      </div>
+      <div class="stat warn">
+        <div class="stat-label">Цена за клиента</div>
+        <div class="stat-value">${fmt(priceWithMargin)}<small> ₽</small></div>
+        <div class="stat-sub">наценка ${state.margin}% · ${fmt(pricePerM2)} ₽/м²</div>
+      </div>
+    </div>
+
+    <div class="margin-card">
+      <div class="margin-head">
+        <h3>Калькулятор маржи</h3>
+        <span class="stat-sub">двигайте слайдер для пересчёта</span>
+      </div>
+      <div class="margin-ctrl">
+        <span class="stat-sub">5%</span>
+        <input type="range" min="5" max="80" step="1" value="${state.margin}" class="margin-slider" oninput="setMargin(this.value)">
+        <span class="stat-sub">80%</span>
+        <div class="margin-val">${state.margin}%</div>
+      </div>
+      <div class="margin-grid">
+        <div class="mi"><div class="l">Себестоимость</div><div class="v">${fmt(t.subtotal)} ₽</div></div>
+        <div class="mi"><div class="l">Цена клиенту</div><div class="v blue">${fmt(priceWithMargin)} ₽</div></div>
+        <div class="mi"><div class="l">Прибыль</div><div class="v ok">${fmt(profit)} ₽</div></div>
+        <div class="mi"><div class="l">Маржинальность</div><div class="v">${priceWithMargin?Math.round(profit/priceWithMargin*100):0}%</div></div>
+      </div>
+    </div>
+
+    ${p.types.map((type,ti)=>renderTypeSection(type,ti,t.perType[ti])).join("")}
+
+    <div class="section">
+      <div class="section-hdr">
+        <h3>Материалы <span class="pill blue">${p.materials.length} поз.</span></h3>
+        <span class="section-sub">общий пул для всех типов кровли</span>
+      </div>
+      <div class="tbl-wrap">
+        <table class="est">
+          <thead><tr>
+            <th>Наименование</th>
+            <th style="width:70px">Ед.</th>
+            <th class="r" style="width:100px">Кол-во</th>
+            <th class="r" style="width:130px">Цена ₽</th>
+            <th class="r" style="width:140px">Сумма ₽</th>
+          </tr></thead>
+          <tbody>
+            ${p.materials.map((m,mi)=>renderRow(m,"material",mi)).join("")}
+          </tbody>
+        </table>
+      </div>
+      <div class="section-total">
+        <div class="lbl">Итого по материалам (с НДС)</div>
+        <div class="val">${fmt(t.matTotal)} ₽</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-hdr">
+        <h3>Итоговая стоимость объекта <span class="pill green">финал</span></h3>
+      </div>
+      <div style="padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+        <div>
+          <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Себестоимость объекта</div>
+          <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em">${fmt(t.subtotal)} <small style="font-size:18px;color:var(--text2)">₽</small></div>
+          <div style="font-size:13px;color:var(--text2);margin-top:6px">Работы: ${fmt(t.worksTotal)} ₽ · Материалы: ${fmt(t.matTotal)} ₽</div>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Предложение клиенту</div>
+          <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;color:var(--accent)">${fmt(priceWithMargin)} <small style="font-size:18px;color:var(--text2)">₽</small></div>
+          <div style="font-size:13px;color:var(--text2);margin-top:6px">Наценка ${state.margin}% · Прибыль ${fmt(profit)} ₽</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insights">
+      ${renderInsights(p,t,priceWithMargin,profit)}
+    </div>
+  `;
 }
 
-document.querySelectorAll('.p2-sort-btn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
-    p2sort=b.dataset.s;
-    document.querySelectorAll('.p2-sort-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');renderP2();
-  });
-});
-</script>
+function renderTypeSection(type, idx, tot){
+  const area = type.area ? `${fmt(type.area)} м²` : "";
+  return `
+    <div class="section">
+      <div class="type-hdr">
+        <div class="type-num">${type.num||idx+1}</div>
+        <div class="type-title">${type.label}</div>
+        ${area?`<div class="type-area">${area}</div>`:""}
+      </div>
+      <div class="tbl-wrap">
+        <table class="est">
+          <thead><tr>
+            <th>Наименование работ</th>
+            <th style="width:70px">Ед.</th>
+            <th class="r" style="width:100px">Объём</th>
+            <th class="r" style="width:130px">Цена ₽</th>
+            <th class="r" style="width:140px">Сумма ₽</th>
+          </tr></thead>
+          <tbody>
+            ${type.items.map((it,ii)=>renderRow(it,"work",ii,idx)).join("")}
+          </tbody>
+        </table>
+      </div>
+      <div class="section-total">
+        <div class="lbl">Итого по работам ${type.label.toLowerCase()} (с НДС)</div>
+        <div class="val">${fmt(tot.total)} ₽</div>
+      </div>
+    </div>
+  `;
+}
 
+function renderRow(it, kind, idx, typeIdx){
+  const src = it.source || "unknown";
+  const srcLabel = src==="auto" ? "✓ авто-подбор из БД" : src==="manual" ? "✎ ручной ввод" : "⚠ укажите цену";
+  const pathAttr = kind==="work" ? `data-kind="work" data-type="${typeIdx}" data-idx="${idx}"` : `data-kind="material" data-idx="${idx}"`;
+  const inputBg = src==="unknown" ? "background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.4)" : "";
+  return `
+    <tr>
+      <td class="name-col">
+        ${it.name}
+        <div class="match-src ${src}">${srcLabel}</div>
+      </td>
+      <td>${it.unit}</td>
+      <td class="r qty-cell">${Number.isInteger(it.qty)?fmt(it.qty):fmtD(it.qty)}</td>
+      <td class="r">
+        <input type="number" class="price-input" value="${it.price||""}" min="0" step="1" placeholder="—" ${pathAttr} oninput="updatePrice(this)" style="${inputBg}">
+      </td>
+      <td class="r tot-cell" ${pathAttr.replace(/\binput\b/,'')} id="tot-${kind}-${typeIdx||0}-${idx}">${fmt(it.total)} ₽</td>
+    </tr>
+  `;
+}
+
+function renderInsights(p, t, priceWithMargin, profit){
+  const insights = [];
+
+  // Гарантия проверка
+  insights.push({
+    type:"ok",
+    icon:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    title:"Гарантия Технониколь",
+    body:"Используемые системы (Техноэласт, XPS CARBON) сертифицированы с гарантией производителя до 15 лет при условии монтажа обученной бригадой."
+  });
+
+  // Экономия на закупке
+  if(t.matTotal > 300000){
+    const saving = Math.round(t.matTotal * 0.08);
+    insights.push({
+      type:"ok",
+      icon:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+      title:"Оптовая закупка",
+      body:`При заказе материалов у одного поставщика Технониколь скидка 8-12%. Потенциальная экономия: ~${fmt(saving)} ₽.`
+    });
+  }
+
+  // Сезонность
+  insights.push({
+    type:"tip",
+    icon:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    title:"Оптимальный сезон",
+    body:"Битумные материалы (Техноэласт, Унифлекс) требуют температуры от +5°C. Лучший период: май–сентябрь. Зимой — рост затрат на 15-20%."
+  });
+
+  // Проверка стропильной
+  const hasRoofTypes = p.types.some(t=>t.items.some(i=>i.name.toLowerCase().includes("профлиста")||i.name.toLowerCase().includes("мембран")));
+  if(hasRoofTypes){
+    insights.push({
+      type:"warn",
+      icon:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+      title:"Проверка несущей способности",
+      body:"Перед монтажом проверить состояние стропильной системы/прогонов и мауэрлата. Нагрузка кровельного пирога с XPS 150мм + стяжка: ~80-100 кг/м²."
+    });
+  }
+
+  // Снегозадержатели
+  const hasSnowGuard = p.materials.some(m=>m.name.toLowerCase().includes("снегозадерж"));
+  if(!hasSnowGuard && p.types.some(t=>t.items.some(i=>i.name.toLowerCase().includes("карниз")))){
+    insights.push({
+      type:"warn",
+      icon:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>`,
+      title:"Рекомендуется добавить снегозадержатели",
+      body:"В проекте нет снегозадержателей. Для скатных кровель в регионах со снежной нагрузкой это снижает страховые риски и ответственность перед третьими лицами."
+    });
+  }
+
+  // Рентабельность
+  const marg = priceWithMargin ? profit/priceWithMargin*100 : 0;
+  if(marg < 15){
+    insights.push({
+      type:"warn",
+      icon:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+      title:"Низкая маржа",
+      body:`Текущая маржа ${Math.round(marg)}% — для кровельных работ оптимально 20-30%. Проверьте цены материалов или увеличьте наценку.`
+    });
+  } else if(marg >= 25){
+    insights.push({
+      type:"ok",
+      icon:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+      title:"Здоровая маржинальность",
+      body:`Маржа ${Math.round(marg)}% соответствует рыночной норме для кровельных работ (20-30%). Есть запас для торга с клиентом.`
+    });
+  }
+
+  // Качество распознавания
+  if(t.unknownCount === 0){
+    insights.push({
+      type:"ok",
+      icon:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>`,
+      title:"Полное распознавание",
+      body:`Все ${t.autoCount} позиций найдены в базе цен 2026 года. Расчёт отражает реальные рыночные условия рынка РФ.`
+    });
+  }
+
+  return insights.map(i=>`
+    <div class="ins ${i.type}">
+      <div class="ins-icon">${i.icon}</div>
+      <div class="ins-body">
+        <h4>${i.title}</h4>
+        <p>${i.body}</p>
+      </div>
+    </div>
+  `).join("");
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════════════════════════════════════════
+window.setMargin = function(v){
+  state.margin = +v;
+  render();
+};
+
+window.updatePrice = function(input){
+  const kind = input.dataset.kind;
+  const idx = +input.dataset.idx;
+  const val = parseFloat(input.value) || 0;
+  if(kind==="work"){
+    const ti = +input.dataset.type;
+    const item = state.project.types[ti].items[idx];
+    item.price = val;
+    item.total = +(item.qty * val).toFixed(2);
+    item.source = val>0 ? "manual" : "unknown";
+  } else {
+    const item = state.project.materials[idx];
+    item.price = val;
+    item.total = +(item.qty * val).toFixed(2);
+    item.source = val>0 ? "manual" : "unknown";
+  }
+  render();
+};
+
+window.loadSample = function(key){
+  showLoader("Загружаю демо-объект...");
+  setTimeout(()=>{
+    state.project = applyPricing(JSON.parse(JSON.stringify(DEMO[key])));
+    hideLoader();
+    render();
+    window.scrollTo({top:0,behavior:"smooth"});
+  },600);
+};
+
+window.loadDemo = function(){ loadSample("kazan"); };
+
+window.resetApp = function(){
+  state.project = null;
+  state.margin = 20;
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+window.copyShortSummary = function(){
+  const p = state.project;
+  const t = totalsForProject(p);
+  const priceWithMargin = Math.round(t.subtotal * (1 + state.margin/100));
+  const lines = [
+    `КП: ${p.kpNumber||"—"} от ${p.kpDate||"—"}`,
+    `Объект: ${p.objectName}`,
+    `Площадь: ${fmt(t.totalArea)} м² · ${p.types.length} тип(ов) кровли`,
+    ``,
+    `Работы: ${fmt(t.worksTotal)} ₽`,
+    `Материалы: ${fmt(t.matTotal)} ₽`,
+    `Себестоимость: ${fmt(t.subtotal)} ₽ (с НДС ${state.vat}%)`,
+    ``,
+    `Наценка: ${state.margin}%`,
+    `ЦЕНА ДЛЯ КЛИЕНТА: ${fmt(priceWithMargin)} ₽`,
+    `Прибыль: ${fmt(priceWithMargin-t.subtotal)} ₽`,
+    ``,
+    `Гарантия: ${p.warranty||"—"} · Срок: ${p.timeline||"—"}`
+  ].join("\n");
+  navigator.clipboard.writeText(lines).then(()=>{
+    showModal("Скопировано","Итог по объекту скопирован в буфер обмена. Можете вставить в мессенджер или email клиенту.");
+  });
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// EXPORT TO EXCEL
+// ═══════════════════════════════════════════════════════════════════════════
+window.exportExcel = function(){
+  const p = state.project;
+  const t = totalsForProject(p);
+  const priceWithMargin = Math.round(t.subtotal * (1 + state.margin/100));
+
+  const wb = XLSX.utils.book_new();
+  const rows = [];
+
+  rows.push([""]);
+  rows.push(["","Кровельные работы, общестроительные работы, услуги генподряда"]);
+  rows.push([""]);
+  rows.push([""]);
+  rows.push(["","КП №"+(p.kpNumber||""),"","","","","","от "+(p.kpDate||"")]);
+  rows.push([""]);
+  rows.push(["","Объект: "+p.objectName]);
+  rows.push([""]);
+  rows.push(["","Наименование услуги","","","Ед.изм.","Кол-во","Цена руб.","Стоимость руб."]);
+
+  for(const type of p.types){
+    rows.push(["",type.num+" тип"]);
+    for(const it of type.items){
+      rows.push(["",it.name,"","",it.unit,it.qty,it.price,it.total]);
+    }
+    const s = type.items.reduce((a,x)=>a+(x.total||0),0);
+    rows.push(["",`Итого по работам ${type.num} тип кровли, с НДС:`,"","","","","",s]);
+  }
+  rows.push(["","ИТОГО по работам, с НДС:","","","","","",t.worksTotal]);
+  rows.push([""]);
+  rows.push(["","Наименование материала","","","Ед.изм.","Кол-во","Цена руб.","Стоимость руб."]);
+  for(const m of p.materials){
+    rows.push(["",m.name,"","",m.unit,m.qty,m.price,m.total]);
+  }
+  rows.push(["","ИТОГО по материалам, с НДС:","","","","","",t.matTotal]);
+  rows.push([""]);
+  rows.push(["","СЕБЕСТОИМОСТЬ ОБЪЕКТА (с НДС):","","","","","",t.subtotal]);
+  rows.push(["",`Наценка: ${state.margin}%`]);
+  rows.push(["","ЦЕНА ДЛЯ КЛИЕНТА:","","","","","",priceWithMargin]);
+  rows.push([""]);
+  rows.push(["",`Гарантия: ${p.warranty||"—"}`]);
+  rows.push(["",`Срок монтажа: ${p.timeline||"—"}`]);
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws["!cols"] = [{wch:2},{wch:70},{wch:4},{wch:4},{wch:10},{wch:10},{wch:12},{wch:14}];
+  XLSX.utils.book_append_sheet(wb, ws, "Смета");
+
+  const fname = `Смета_${(p.kpNumber||"объект").replace(/[^\w\-]/g,"_")}_${new Date().toISOString().slice(0,10)}.xlsx`;
+  XLSX.writeFile(wb, fname);
+};
+
+window.downloadTemplate = function(){
+  const rows = [
+    [""],
+    ["","Шаблон КП для расчёта в СметаКровля AI"],
+    [""],
+    ["","КП №Т-0001","","","","","","от __.__.____"],
+    [""],
+    ["","Объект: Укажите адрес и назначение объекта"],
+    [""],
+    ["","Наименование услуги","","","Ед.изм.","Кол-во","Цена руб.","Стоимость руб."],
+    ["","1 тип"],
+    ["","Подготовка поверхности с огрунтовкой праймером","","","м2",100,"",""],
+    ["","Устройство пароизоляции наплавляемой","","","м2",100,"",""],
+    ["","Устройство теплоизоляции из экструдированного утеплителя 150 мм","","","м2",100,"",""],
+    ["","Устройство гидроизоляции наплавляемой в два слоя","","","м2",100,"",""],
+    [""],
+    ["","Наименование материала","","","Ед.изм.","Кол-во","Цена руб.","Стоимость руб."],
+    ["","Праймер битумный ТЕХНОНИКОЛЬ №1","","","кг",40,"",""],
+    ["","XPS ТЕХНОНИКОЛЬ CARBON PROF 100мм","","","м3",15,"",""],
+    ["","Техноэласт ЭПП","","","м2",110,"",""]
+  ];
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws["!cols"] = [{wch:2},{wch:70},{wch:4},{wch:4},{wch:10},{wch:10},{wch:12},{wch:14}];
+  XLSX.utils.book_append_sheet(wb, ws, "Шаблон КП");
+  XLSX.writeFile(wb, "Шаблон_КП_СметаКровля.xlsx");
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════════════════
+function showLoader(text){
+  document.getElementById("loaderText").textContent = text||"Обработка...";
+  document.getElementById("loader").classList.add("on");
+}
+function hideLoader(){
+  document.getElementById("loader").classList.remove("on");
+}
+function showModal(title, body){
+  document.getElementById("modalBody").innerHTML = `
+    <h3>${title}</h3>
+    <p>${body}</p>
+    <button class="btn btn-primary" onclick="closeModal()">Понятно</button>
+  `;
+  document.getElementById("modal").classList.add("on");
+}
+window.closeModal = function(){ document.getElementById("modal").classList.remove("on"); };
+window.showAbout = function(){
+  showModal("О сервисе", `<strong>СметаКровля AI v1.0</strong><br>Smart Roofing Estimator · Q1 2026<br><br>Встроенная база 58+ позиций материалов и работ Технониколь с актуальными рыночными ценами. Автоматическое распознавание стандартных позиций КП, мгновенный расчёт маржинальности, экспорт в Excel/PDF.<br><br><strong>Готовность к деплою:</strong> загрузите этот файл в GitHub repo → включите GitHub Pages — готовое веб-приложение.`);
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FILE UPLOAD
+// ═══════════════════════════════════════════════════════════════════════════
+const dz = document.getElementById("dropzone");
+const fi = document.getElementById("fileInput");
+
+dz.addEventListener("click", e => {
+  if(e.target.tagName !== "INPUT") fi.click();
+});
+fi.addEventListener("change", e => {
+  if(e.target.files[0]) handleFile(e.target.files[0]);
+});
+["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("drag");}));
+["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("drag");}));
+dz.addEventListener("drop",e=>{
+  const f = e.dataTransfer.files[0];
+  if(f) handleFile(f);
+});
+
+function handleFile(file){
+  if(!file.name.match(/\.(xlsx|xls)$/i)){
+    showModal("Неверный формат","Поддерживаются только файлы Excel (.xlsx или .xls). Попробуйте сохранить файл в одном из этих форматов.");
+    return;
+  }
+  if(file.size > 10*1024*1024){
+    showModal("Файл слишком большой","Максимальный размер файла — 10 МБ. Удалите лишние листы или изображения из Excel и попробуйте снова.");
+    return;
+  }
+
+  showLoader("Анализирую структуру файла...");
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      setTimeout(()=>{
+        try {
+          const project = parseExcel(e.target.result);
+          if(project.types.length === 0 && project.materials.length === 0){
+            hideLoader();
+            showModal("Не удалось распознать структуру",
+              "В файле не найдены ни работы, ни материалы с колонками «Наименование», «Ед.изм.», «Кол-во». Скачайте шаблон и попробуйте снова."
+            );
+            return;
+          }
+          state.project = project;
+          hideLoader();
+          render();
+          window.scrollTo({top:0,behavior:"smooth"});
+        } catch(err){
+          hideLoader();
+          showModal("Ошибка обработки", "Не удалось обработать файл: "+err.message);
+        }
+      }, 500);
+    } catch(err){
+      hideLoader();
+      showModal("Ошибка чтения","Не удалось прочитать файл: "+err.message);
+    }
+  };
+  reader.onerror = () => {
+    hideLoader();
+    showModal("Ошибка","Не удалось открыть файл. Попробуйте снова.");
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PDF HANDLING
+// ═══════════════════════════════════════════════════════════════════════════
+const pdfState = {
+  doc: null,
+  filename: "",
+  pageCount: 0,
+  zoom: 1.0,
+  baseScale: 1.0,
+  rendering: false
+};
+
+async function handlePdfFile(file){
+  if(!file.name.match(/\.pdf$/i)){
+    showModal("Неверный формат","Поддерживается только .pdf (AutoCAD-экспорт, сканы чертежей).");
+    return;
+  }
+  if(file.size > 20*1024*1024){
+    showModal("Файл слишком большой","Максимальный размер PDF — 20 МБ. Сохраните чертёж в меньшем разрешении.");
+    return;
+  }
+  if(!window.pdfjsLib){
+    showModal("Библиотека загружается","PDF-движок ещё инициализируется (это занимает 2-3 секунды при первой загрузке). Попробуйте через пару секунд.");
+    return;
+  }
+
+  showLoader("Открываю PDF-чертёж...");
+  try {
+    const buf = await file.arrayBuffer();
+    const doc = await window.pdfjsLib.getDocument({data: buf}).promise;
+
+    pdfState.doc = doc;
+    pdfState.filename = file.name;
+    pdfState.pageCount = doc.numPages;
+    pdfState.zoom = 1.0;
+
+    // Determine base scale from panel width
+    const panel = document.getElementById("pdfPages");
+    const availWidth = panel.clientWidth - 28; // minus padding
+    const firstPage = await doc.getPage(1);
+    const naturalVP = firstPage.getViewport({scale: 1});
+    pdfState.baseScale = Math.min(availWidth / naturalVP.width, 1.5);
+
+    await renderPdfPages();
+    document.getElementById("pdfFilename").textContent = `· ${file.name} · ${doc.numPages} стр.`;
+    document.getElementById("pdfPagesCount").textContent = doc.numPages;
+    document.getElementById("pdfToggleBtn").classList.add("on");
+    hideLoader();
+    togglePdfPanel(true);
+  } catch(err) {
+    hideLoader();
+    showModal("Ошибка открытия PDF","Не удалось открыть файл: "+err.message+". Убедитесь, что PDF не зашифрован и не повреждён.");
+  }
+}
+
+async function renderPdfPages(){
+  if(!pdfState.doc || pdfState.rendering) return;
+  pdfState.rendering = true;
+
+  const container = document.getElementById("pdfPages");
+  container.innerHTML = "";
+  container.classList.remove("empty");
+
+  const scale = pdfState.baseScale * pdfState.zoom;
+
+  for(let i = 1; i <= pdfState.pageCount; i++){
+    const page = await pdfState.doc.getPage(i);
+    const viewport = page.getViewport({scale});
+    const canvas = document.createElement("canvas");
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext("2d");
+
+    const wrap = document.createElement("div");
+    wrap.className = "pdf-page-wrap";
+    wrap.appendChild(canvas);
+
+    const label = document.createElement("div");
+    label.className = "pdf-page-num";
+    label.textContent = `Страница ${i} из ${pdfState.pageCount}`;
+    container.appendChild(label);
+    container.appendChild(wrap);
+
+    await page.render({canvasContext: ctx, viewport}).promise;
+  }
+
+  pdfState.rendering = false;
+  document.getElementById("pdfZoom").textContent = Math.round(pdfState.zoom * 100) + "%";
+}
+
+window.zoomPdf = function(delta){
+  pdfState.zoom = Math.max(0.4, Math.min(3.0, pdfState.zoom + delta));
+  renderPdfPages();
+};
+window.resetPdfZoom = function(){
+  pdfState.zoom = 1.0;
+  renderPdfPages();
+};
+window.togglePdfPanel = function(show){
+  const p = document.getElementById("pdfPanel");
+  if(show === undefined) show = !p.classList.contains("on");
+  p.classList.toggle("on", show);
+};
+
+// Wire PDF dropzone
+const pdz = document.getElementById("pdfDropzone");
+const pfi = document.getElementById("pdfInput");
+pdz.addEventListener("click", e => { if(e.target.tagName !== "INPUT") pfi.click(); });
+pfi.addEventListener("change", e => { if(e.target.files[0]) handlePdfFile(e.target.files[0]); });
+["dragenter","dragover"].forEach(ev => pdz.addEventListener(ev, e => { e.preventDefault(); pdz.classList.add("drag"); }));
+["dragleave","drop"].forEach(ev => pdz.addEventListener(ev, e => { e.preventDefault(); pdz.classList.remove("drag"); }));
+pdz.addEventListener("drop", e => {
+  const f = e.dataTransfer.files[0];
+  if(f) handlePdfFile(f);
+});
+
+// Initial render
+render();
+</script>
 </body>
 </html>
