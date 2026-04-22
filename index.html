@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>СметаКровля AI — профессиональный расчёт кровельных работ</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs" type="module"></script>
-<script type="module">
-  import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs";
-  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.mjs";
-  window.pdfjsLib = pdfjsLib;
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  // Устанавливаем worker сразу после загрузки PDF.js
+  if (window['pdfjsLib']) {
+    window['pdfjsLib'].GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
 </script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -190,7 +191,7 @@ table.est .match-src.unknown{color:var(--err)}
 /* ── PDF VIEWER ── */
 .pdf-panel{position:fixed;top:0;right:0;bottom:0;width:min(540px,55vw);background:var(--panel);border-left:1px solid var(--border);z-index:80;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.3s ease;box-shadow:-20px 0 40px rgba(0,0,0,0.4)}
 .pdf-panel.on{transform:translateX(0)}
-.pdf-panel-hdr{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--panel2)}
+.pdf-panel-hdr{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--panel2);flex-wrap:wrap}
 .pdf-panel-hdr h3{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
 .pdf-panel-hdr .fn{color:var(--text3);font-size:12px;font-weight:400}
 .pdf-ctrls{display:flex;gap:6px;align-items:center}
@@ -199,7 +200,7 @@ table.est .match-src.unknown{color:var(--err)}
 .pdf-ctrls button:disabled{opacity:0.4;cursor:not-allowed}
 .pdf-ctrls .zoom{min-width:50px;text-align:center;font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums}
 .pdf-pages{flex:1;overflow:auto;padding:14px;background:#0a0b0d;display:flex;flex-direction:column;gap:14px;align-items:center}
-.pdf-page-wrap{background:white;box-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:100%}
+.pdf-page-wrap{background:white;box-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:100%;position:relative}
 .pdf-page-wrap canvas{display:block;max-width:100%;height:auto}
 .pdf-page-num{font-size:11px;color:var(--text3);text-align:center;margin-bottom:-6px;margin-top:8px;letter-spacing:0.08em;text-transform:uppercase}
 .pdf-pages.empty{display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;text-align:center;padding:40px}
@@ -210,6 +211,33 @@ table.est .match-src.unknown{color:var(--err)}
 .pdf-close{background:var(--panel)!important;border:1px solid var(--border)!important;color:var(--text)!important;font-size:14px;padding:6px 10px!important;width:auto!important;height:auto!important;border-radius:6px!important}
 .pdf-hint{background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(59,130,246,0.03));border:1px solid rgba(59,130,246,0.25);border-radius:10px;padding:12px 14px;margin:12px 0;color:var(--text2);font-size:12px;line-height:1.6}
 .pdf-hint strong{color:var(--text)}
+
+/* ── PDF ANALYSIS ── */
+.pdf-analysis{background:var(--panel);border:1px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden}
+.pdf-analysis-hdr{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.pdf-analysis-hdr h3{font-size:15px;font-weight:600;display:flex;align-items:center;gap:10px}
+.pdf-analysis-hdr h3 svg{color:var(--blue)}
+.pdf-analysis-body{padding:20px}
+.pdf-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:18px}
+.pdf-stat{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.pdf-stat .l{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
+.pdf-stat .v{font-size:20px;font-weight:700;color:var(--text)}
+.pdf-stat .s{font-size:11px;color:var(--text2);margin-top:2px}
+.pdf-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.pdf-detail-grid{grid-template-columns:1fr}}
+.pdf-detail-box{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.pdf-detail-box h4{font-size:13px;font-weight:600;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:8px}
+.pdf-detail-box h4 .tag{font-size:10px;font-weight:500;padding:2px 7px;background:rgba(59,130,246,0.15);color:var(--blue);border-radius:100px}
+.pdf-chip-list{display:flex;flex-wrap:wrap;gap:5px;max-height:140px;overflow:auto}
+.pdf-chip{font-size:11px;padding:3px 9px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-variant-numeric:tabular-nums}
+.pdf-chip.height{color:var(--ok);border-color:rgba(74,222,128,0.3)}
+.pdf-chip.size{color:var(--blue);border-color:rgba(59,130,246,0.3)}
+.pdf-verify-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(36,39,45,0.6);font-size:13px}
+.pdf-verify-row:last-child{border-bottom:none}
+.pdf-verify-row .lbl{color:var(--text2)}
+.pdf-verify-row .val{font-weight:600;font-variant-numeric:tabular-nums}
+.pdf-verify-row .val.ok{color:var(--ok)}
+.pdf-verify-row .val.warn{color:var(--warn)}
 
 /* ── UPLOAD FOR PDF ── */
 .upload-dual{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -827,8 +855,30 @@ function render(){
   if(!state.project){
     document.getElementById("uploadView").style.display="block";
     document.getElementById("projectView").classList.remove("active");
+
+    // Если PDF загружен без Excel — вставляем анализ в upload-view
+    const existingPanel = document.getElementById("pdfOnlyPanel");
+    if (pdfState.analysis) {
+      const html = renderPdfAnalysisStandalone();
+      if (existingPanel) {
+        existingPanel.innerHTML = html;
+      } else {
+        const div = document.createElement("div");
+        div.id = "pdfOnlyPanel";
+        div.style.maxWidth = "780px";
+        div.style.margin = "24px auto 0";
+        div.innerHTML = html;
+        document.getElementById("uploadView").appendChild(div);
+      }
+    } else if (existingPanel) {
+      existingPanel.remove();
+    }
     return;
   }
+  // Если есть проект, удаляем отдельную PDF-панель (она будет встроена в проект)
+  const existingPanel = document.getElementById("pdfOnlyPanel");
+  if (existingPanel) existingPanel.remove();
+
   document.getElementById("uploadView").style.display="none";
   document.getElementById("projectView").classList.add("active");
 
@@ -840,6 +890,7 @@ function render(){
 
   const v = document.getElementById("projectView");
   v.innerHTML = `
+    ${renderPdfAnalysis(p, t)}
     ${t.unknownCount>0 ? `
       <div class="help-card">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -969,6 +1020,223 @@ function render(){
 
     <div class="insights">
       ${renderInsights(p,t,priceWithMargin,profit)}
+    </div>
+  `;
+}
+
+function renderPdfAnalysisStandalone(){
+  if(!pdfState.analysis) return "";
+  const a = pdfState.analysis;
+  const ptMm = 0.3528;
+
+  const perimMeters100 = Math.round((a.horizontalRun + a.verticalRun) * ptMm * 100 / 1000);
+  const perimMeters50 = Math.round(perimMeters100 / 2);
+  const perimMeters200 = perimMeters100 * 2;
+
+  return `
+    <div class="pdf-analysis" style="animation:fadein 0.4s ease">
+      <div class="pdf-analysis-hdr">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="11" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+          PDF проанализирован
+          <span class="pill blue">${pdfState.filename}</span>
+        </h3>
+        <button class="btn btn-sm" onclick="togglePdfPanel(true)">Открыть чертёж →</button>
+      </div>
+      <div class="pdf-analysis-body">
+        <div class="pdf-stats-grid">
+          <div class="pdf-stat">
+            <div class="l">Страниц</div>
+            <div class="v">${a.pageCount}</div>
+            <div class="s">${a.pageFormat || "—"}</div>
+          </div>
+          <div class="pdf-stat">
+            <div class="l">Линий геометрии</div>
+            <div class="v">${fmt(a.totalLines)}</div>
+            <div class="s">значимых: ${fmt(a.longLines)}</div>
+          </div>
+          <div class="pdf-stat">
+            <div class="l">Горизонт. контуры</div>
+            <div class="v">${fmt(Math.round(a.horizontalRun))}<small style="font-size:12px"> pt</small></div>
+            <div class="s">~${fmt(Math.round(a.horizontalRun * ptMm * 100 / 1000))} м при 1:100</div>
+          </div>
+          <div class="pdf-stat">
+            <div class="l">Вертикал. контуры</div>
+            <div class="v">${fmt(Math.round(a.verticalRun))}<small style="font-size:12px"> pt</small></div>
+            <div class="s">~${fmt(Math.round(a.verticalRun * ptMm * 100 / 1000))} м при 1:100</div>
+          </div>
+        </div>
+
+        <div class="pdf-detail-grid">
+          <div class="pdf-detail-box">
+            <h4>Габариты здания по масштабам<span class="tag">автоподбор</span></h4>
+            ${(a.scaleEstimates || []).map(e => `
+              <div class="pdf-verify-row">
+                <span class="lbl">Масштаб 1:${e.scale}</span>
+                <span class="val">${e.widthM} × ${e.heightM} м</span>
+              </div>
+            `).join("")}
+          </div>
+          <div class="pdf-detail-box">
+            <h4>Периметр контуров<span class="tag">оценка</span></h4>
+            <div class="pdf-verify-row">
+              <span class="lbl">При масштабе 1:50</span>
+              <span class="val">${fmt(perimMeters50)} м.пог.</span>
+            </div>
+            <div class="pdf-verify-row">
+              <span class="lbl">При масштабе 1:100</span>
+              <span class="val">${fmt(perimMeters100)} м.пог.</span>
+            </div>
+            <div class="pdf-verify-row">
+              <span class="lbl">При масштабе 1:200</span>
+              <span class="val">${fmt(perimMeters200)} м.пог.</span>
+            </div>
+          </div>
+        </div>
+
+        ${a.textLabels && a.textLabels.length > 0 ? `
+          <div class="pdf-detail-box" style="margin-top:16px">
+            <h4>Извлечённые текстовые метки<span class="tag">${a.textLabels.length} шт</span></h4>
+            <div class="pdf-chip-list">
+              ${a.textLabels.slice(0,40).map(l => `<span class="pdf-chip">${(l.text || "").replace(/[<>]/g,'').slice(0,20)}</span>`).join("")}
+              ${a.textLabels.length > 40 ? `<span class="pdf-chip" style="color:var(--text3)">...+${a.textLabels.length-40}</span>` : ""}
+            </div>
+          </div>
+        ` : `
+          <div class="pdf-hint" style="margin:16px 0 0">
+            <strong>Текст не извлекается.</strong> Это типично для экспорта из AutoCAD — все размеры и подписи нарисованы как векторная графика (линии), а не как символы. Геометрия при этом доступна полностью — см. статистику выше.
+          </div>
+        `}
+
+        <div class="pdf-hint" style="margin:16px 0 0">
+          <strong>Для точной сверки</strong> загрузите также Excel с объёмами — приложение автоматически сравнит количества в смете с контурами на чертеже и покажет расхождения.
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderPdfAnalysis(p, t){
+  if(!pdfState.analysis) return "";
+  const a = pdfState.analysis;
+
+  // Верификация количеств из сметы vs реальности на чертеже
+  const verifications = [];
+
+  // Периметр vs узлы примыканий
+  const totalPrim = p.types.reduce((acc, type) => {
+    const prim = type.items.find(i => i.name.toLowerCase().includes("примыкан") && i.unit === "м.пог.");
+    return acc + (prim ? prim.qty : 0);
+  }, 0);
+
+  if(totalPrim > 0 && a.perimeterAt100 > 0){
+    // Наиболее вероятный масштаб — тот, при котором периметр на чертеже максимально близок к сметному
+    const candidates = [
+      {scale: "1:50", value: a.perimeterAt50},
+      {scale: "1:100", value: a.perimeterAt100},
+      {scale: "1:200", value: a.perimeterAt200}
+    ];
+    const best = candidates.reduce((a, b) =>
+      Math.abs(b.value - totalPrim) < Math.abs(a.value - totalPrim) ? b : a
+    );
+    const deviation = Math.abs(best.value - totalPrim) / totalPrim * 100;
+
+    verifications.push({
+      label: `Периметр примыканий по смете: ${fmt(totalPrim)} м.пог.`,
+      sub: `На чертеже (при масштабе ${best.scale}) горизонтальные + вертикальные длинные линии: ~${fmt(best.value)} м`,
+      ok: deviation < 25,
+      val: deviation < 25 ? `✓ ${Math.round(deviation)}% расхождение` : `⚠ ${Math.round(deviation)}% расхождение`
+    });
+  }
+
+  // Оценка общей площади здания
+  const totalAreaFromEstimate = t.totalArea;
+  const areaEstimates = a.scaleEstimates || [];
+  const areaVerif = areaEstimates.map(e => ({
+    scale: `1:${e.scale}`,
+    area: Math.round(e.widthM * e.heightM)
+  }));
+  if(areaVerif.length && totalAreaFromEstimate > 0){
+    const best = areaVerif.reduce((x, y) =>
+      Math.abs(y.area - totalAreaFromEstimate) < Math.abs(x.area - totalAreaFromEstimate) ? y : x
+    );
+    const dev = Math.abs(best.area - totalAreaFromEstimate) / totalAreaFromEstimate * 100;
+    verifications.push({
+      label: `Площадь по смете: ${fmt(totalAreaFromEstimate)} м²`,
+      sub: `Габариты контура чертежа (${best.scale}): ~${fmt(best.area)} м²`,
+      ok: dev < 40,
+      val: dev < 40 ? `✓ ${Math.round(dev)}% расхождение` : `⚠ ${Math.round(dev)}% расхождение`
+    });
+  }
+
+  return `
+    <div class="pdf-analysis">
+      <div class="pdf-analysis-hdr">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="11" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+          Анализ PDF-чертежа
+          <span class="pill blue">${pdfState.filename || "чертёж"}</span>
+        </h3>
+        <button class="btn btn-sm" onclick="togglePdfPanel(true)">Открыть чертёж →</button>
+      </div>
+      <div class="pdf-analysis-body">
+        <div class="pdf-stats-grid">
+          <div class="pdf-stat">
+            <div class="l">Страниц</div>
+            <div class="v">${a.pageCount}</div>
+            <div class="s">${a.pageFormat || "—"}</div>
+          </div>
+          <div class="pdf-stat">
+            <div class="l">Геометрич. линий</div>
+            <div class="v">${fmt(a.totalLines)}</div>
+            <div class="s">значимых: ${fmt(a.longLines)}</div>
+          </div>
+          <div class="pdf-stat">
+            <div class="l">Горизонт. контуры</div>
+            <div class="v">${fmt(Math.round(a.horizontalRun))}<small style="font-size:12px"> pt</small></div>
+            <div class="s">~${fmt(Math.round(a.horizontalRun * 0.3528 * 100 / 1000))} м при 1:100</div>
+          </div>
+          <div class="pdf-stat">
+            <div class="l">Вертикал. контуры</div>
+            <div class="v">${fmt(Math.round(a.verticalRun))}<small style="font-size:12px"> pt</small></div>
+            <div class="s">~${fmt(Math.round(a.verticalRun * 0.3528 * 100 / 1000))} м при 1:100</div>
+          </div>
+        </div>
+
+        <div class="pdf-detail-grid">
+          <div class="pdf-detail-box">
+            <h4>
+              Оценка масштаба
+              <span class="tag">автоподбор</span>
+            </h4>
+            ${areaEstimates.map(e => `
+              <div class="pdf-verify-row">
+                <span class="lbl">Масштаб 1:${e.scale}</span>
+                <span class="val">${e.widthM} × ${e.heightM} м</span>
+              </div>
+            `).join("")}
+          </div>
+
+          <div class="pdf-detail-box">
+            <h4>
+              Сверка со сметой
+              <span class="tag">${verifications.length ? "найдено" : "—"}</span>
+            </h4>
+            ${verifications.length ? verifications.map(v => `
+              <div class="pdf-verify-row" style="flex-direction:column;align-items:flex-start;gap:4px">
+                <span class="lbl" style="font-weight:500;color:var(--text)">${v.label}</span>
+                <span style="font-size:11px;color:var(--text3)">${v.sub}</span>
+                <span class="val ${v.ok ? "ok" : "warn"}" style="margin-left:auto;margin-top:-18px">${v.val}</span>
+              </div>
+            `).join("") : `<div style="color:var(--text3);font-size:12px">Добавьте позиции в смету для сверки</div>`}
+          </div>
+        </div>
+
+        <div class="pdf-hint" style="margin:16px 0 0">
+          <strong>Технические ограничения автоматического обмера:</strong>
+          PDF экспортирован из AutoCAD, но все размеры и подписи нарисованы как <strong>векторная графика</strong> (линии, а не текст). Извлекается только геометрия контуров. Точный обмер площадей и длин требует интерактивного режима с указанием масштаба пользователем (Уровень 2 разработки, 4-6 недель).
+        </div>
+      </div>
     </div>
   `;
 }
@@ -1354,7 +1622,7 @@ function handleFile(file){
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PDF HANDLING
+// PDF HANDLING (PDF.js 3.11 UMD)
 // ═══════════════════════════════════════════════════════════════════════════
 const pdfState = {
   doc: null,
@@ -1362,55 +1630,335 @@ const pdfState = {
   pageCount: 0,
   zoom: 1.0,
   baseScale: 1.0,
-  rendering: false
+  rendering: false,
+  analysis: null
 };
 
+function waitForPdfJs(maxMs){
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    const check = () => {
+      if (window.pdfjsLib) {
+        if (!window.pdfjsLib.GlobalWorkerOptions.workerSrc) {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+        resolve();
+      } else if (Date.now() - start > maxMs) {
+        reject(new Error("PDF.js не загрузился за " + (maxMs/1000) + " сек. Проверьте интернет-соединение."));
+      } else {
+        setTimeout(check, 100);
+      }
+    };
+    check();
+  });
+}
+
 async function handlePdfFile(file){
+  console.log("[PDF] Получен файл:", file.name, file.size, "байт");
+
   if(!file.name.match(/\.pdf$/i)){
     showModal("Неверный формат","Поддерживается только .pdf (AutoCAD-экспорт, сканы чертежей).");
     return;
   }
-  if(file.size > 20*1024*1024){
-    showModal("Файл слишком большой","Максимальный размер PDF — 20 МБ. Сохраните чертёж в меньшем разрешении.");
-    return;
-  }
-  if(!window.pdfjsLib){
-    showModal("Библиотека загружается","PDF-движок ещё инициализируется (это занимает 2-3 секунды при первой загрузке). Попробуйте через пару секунд.");
+  if(file.size > 30*1024*1024){
+    showModal("Файл слишком большой","Максимальный размер PDF — 30 МБ.");
     return;
   }
 
-  showLoader("Открываю PDF-чертёж...");
+  showLoader("Жду загрузку PDF-библиотеки...");
+  try {
+    await waitForPdfJs(10000);
+    console.log("[PDF] PDF.js готов, версия:", window.pdfjsLib.version);
+  } catch(err) {
+    hideLoader();
+    showModal("Ошибка загрузки PDF.js", err.message + " Возможно, CDN недоступен. Попробуйте открыть приложение в другом браузере или с другим интернетом.");
+    return;
+  }
+
+  showLoader("Читаю PDF-файл...");
   try {
     const buf = await file.arrayBuffer();
-    const doc = await window.pdfjsLib.getDocument({data: buf}).promise;
+    console.log("[PDF] Буфер прочитан:", buf.byteLength, "байт");
+
+    showLoader("Открываю PDF-документ...");
+    const loadingTask = window.pdfjsLib.getDocument({data: new Uint8Array(buf)});
+    loadingTask.onProgress = (p) => {
+      if (p.total > 0) {
+        document.getElementById("loaderText").textContent = `Загрузка PDF: ${Math.round(p.loaded/p.total*100)}%`;
+      }
+    };
+    const doc = await loadingTask.promise;
+    console.log("[PDF] Документ открыт, страниц:", doc.numPages);
 
     pdfState.doc = doc;
     pdfState.filename = file.name;
     pdfState.pageCount = doc.numPages;
     pdfState.zoom = 1.0;
 
-    // Determine base scale from panel width
+    // Определяем базовый масштаб рендера из ширины панели
     const panel = document.getElementById("pdfPages");
-    const availWidth = panel.clientWidth - 28; // minus padding
+    const availWidth = (panel.clientWidth || 500) - 28;
     const firstPage = await doc.getPage(1);
     const naturalVP = firstPage.getViewport({scale: 1});
-    pdfState.baseScale = Math.min(availWidth / naturalVP.width, 1.5);
+    pdfState.baseScale = Math.max(0.3, Math.min(availWidth / naturalVP.width, 1.5));
+    console.log("[PDF] Base scale:", pdfState.baseScale);
 
+    showLoader("Анализирую геометрию чертежа...");
+    pdfState.analysis = await analyzeAllPages(doc);
+    console.log("[PDF] Анализ завершён:", pdfState.analysis);
+
+    showLoader("Рендерю страницы...");
     await renderPdfPages();
+
     document.getElementById("pdfFilename").textContent = `· ${file.name} · ${doc.numPages} стр.`;
     document.getElementById("pdfPagesCount").textContent = doc.numPages;
     document.getElementById("pdfToggleBtn").classList.add("on");
+
     hideLoader();
     togglePdfPanel(true);
+
+    // Главное: перерисовать view — блок анализа появится либо в проекте, либо на стартовом экране
+    render();
   } catch(err) {
+    console.error("[PDF] Ошибка:", err);
     hideLoader();
-    showModal("Ошибка открытия PDF","Не удалось открыть файл: "+err.message+". Убедитесь, что PDF не зашифрован и не повреждён.");
+    showModal("Ошибка обработки PDF",
+      "Не удалось обработать файл: " + (err.message || err) +
+      "<br><br>Возможные причины:" +
+      "<br>• PDF зашифрован или повреждён" +
+      "<br>• Слишком большой файл" +
+      "<br>• Проблема с интернетом (PDF.js использует worker из CDN)" +
+      "<br><br>Откройте DevTools (F12) → Console для подробностей."
+    );
   }
+}
+
+// Показывает результат анализа PDF даже если нет сметы
+function showPdfOnlyResults(){
+  const a = pdfState.analysis;
+  if(!a) return;
+  const msg = `
+    <div style="text-align:left">
+      <p><strong>PDF проанализирован успешно.</strong></p>
+      <ul style="text-align:left;padding-left:20px;line-height:1.8">
+        <li>Страниц: <strong>${a.pageCount}</strong> (${a.pageFormat || 'формат не определён'})</li>
+        <li>Всего линий геометрии: <strong>${a.totalLines.toLocaleString('ru-RU')}</strong></li>
+        <li>Значимых линий (контуры): <strong>${a.longLines.toLocaleString('ru-RU')}</strong></li>
+        <li>Текстовых меток: <strong>${a.textLabels ? a.textLabels.length : 0}</strong></li>
+      </ul>
+      <p style="margin-top:14px;color:var(--text2);font-size:13px">Для полной сверки со сметой загрузите также Excel-файл с объёмами. Чертёж теперь доступен через кнопку «Чертежи» внизу экрана.</p>
+    </div>
+  `;
+  showModal("Анализ PDF завершён", msg);
+}
+
+// ── Реальный геометрический анализ PDF ──────────────────────────────────
+async function analyzeAllPages(doc){
+  const result = {
+    pageCount: doc.numPages,
+    pageSize: null,
+    pageFormat: null,
+    totalLines: 0,
+    longLines: 0,
+    horizontalRun: 0,
+    verticalRun: 0,
+    rects: 0,
+    curves: 0,
+    textLabels: [],
+    bboxMin: {x: Infinity, y: Infinity},
+    bboxMax: {x: -Infinity, y: -Infinity},
+    pages: []
+  };
+
+  for(let i = 1; i <= doc.numPages; i++){
+    console.log(`[PDF] Анализирую страницу ${i}/${doc.numPages}...`);
+    const page = await doc.getPage(i);
+    const vp = page.getViewport({scale: 1});
+
+    // Анализ геометрии через operatorList
+    let geom = {totalLines:0, longLines:0, horizontalRun:0, verticalRun:0, rects:0, curves:0, bbox:null};
+    try {
+      const ops = await page.getOperatorList();
+      geom = analyzePageOps(ops, vp);
+    } catch(err){
+      console.warn(`[PDF] Не удалось проанализировать геометрию стр.${i}:`, err.message);
+    }
+
+    // Анализ текста (если есть)
+    let textLabels = [];
+    try {
+      const textContent = await page.getTextContent();
+      for(const item of textContent.items){
+        if(item.str && item.str.trim()){
+          textLabels.push({
+            text: item.str.trim(),
+            x: item.transform ? item.transform[4] : 0,
+            y: item.transform ? item.transform[5] : 0,
+            page: i
+          });
+        }
+      }
+    } catch(err){
+      console.warn(`[PDF] Нет извлекаемого текста на стр.${i}`);
+    }
+
+    result.pages.push({
+      index: i,
+      width: vp.width,
+      height: vp.height,
+      ...geom,
+      textLabels: textLabels.length
+    });
+
+    if(!result.pageSize){
+      result.pageSize = {width: vp.width, height: vp.height};
+      result.pageFormat = detectPageFormat(vp.width, vp.height);
+    }
+
+    result.totalLines += geom.totalLines;
+    result.longLines += geom.longLines;
+    result.horizontalRun += geom.horizontalRun;
+    result.verticalRun += geom.verticalRun;
+    result.rects += geom.rects;
+    result.curves += geom.curves;
+    result.textLabels = result.textLabels.concat(textLabels);
+
+    if(geom.bbox){
+      result.bboxMin.x = Math.min(result.bboxMin.x, geom.bbox.minX);
+      result.bboxMin.y = Math.min(result.bboxMin.y, geom.bbox.minY);
+      result.bboxMax.x = Math.max(result.bboxMax.x, geom.bbox.maxX);
+      result.bboxMax.y = Math.max(result.bboxMax.y, geom.bbox.maxY);
+    }
+  }
+
+  result.scaleEstimates = estimateScales(result);
+
+  const ptMm = 0.3528;
+  result.perimeterAt50  = (result.horizontalRun + result.verticalRun) * ptMm * 50  / 1000;
+  result.perimeterAt100 = (result.horizontalRun + result.verticalRun) * ptMm * 100 / 1000;
+  result.perimeterAt200 = (result.horizontalRun + result.verticalRun) * ptMm * 200 / 1000;
+
+  // Извлекаем отметки высот и размеры из текстовых меток
+  result.heightMarks = result.textLabels.filter(l =>
+    /^[+\-−]?\d+[.,]\d+$/.test(l.text) && l.text.length <= 8
+  );
+  result.sizeMarks = result.textLabels.filter(l =>
+    /^\d{3,5}$/.test(l.text)
+  );
+
+  return result;
+}
+
+function analyzePageOps(ops, vp){
+  const fnArray = ops.fnArray;
+  const argsArray = ops.argsArray;
+  const OPS = window.pdfjsLib.OPS;
+
+  let totalLines = 0, longLines = 0;
+  let horizontalRun = 0, verticalRun = 0;
+  let rects = 0, curves = 0;
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+  let curX = 0, curY = 0, startX = 0, startY = 0;
+
+  for(let i = 0; i < fnArray.length; i++){
+    const fn = fnArray[i];
+    const args = argsArray[i];
+
+    // В PDF.js 3.x constructPath имеет формат: [ops[], args[], minMax?]
+    if(fn === OPS.constructPath){
+      const subOps = args[0];
+      const subArgs = args[1];
+      if(!subOps || !subArgs) continue;
+
+      let idx = 0;
+      for(let j = 0; j < subOps.length; j++){
+        const sop = subOps[j];
+        if(sop === OPS.moveTo){
+          curX = subArgs[idx++]; curY = subArgs[idx++];
+          startX = curX; startY = curY;
+        } else if(sop === OPS.lineTo){
+          const nx = subArgs[idx++], ny = subArgs[idx++];
+          const dx = nx - curX, dy = ny - curY;
+          const len = Math.sqrt(dx*dx + dy*dy);
+          totalLines++;
+          if(len > 100){
+            longLines++;
+            if(Math.abs(dy) < 0.5 && Math.abs(dx) > 50) horizontalRun += len;
+            if(Math.abs(dx) < 0.5 && Math.abs(dy) > 50) verticalRun += len;
+          }
+          if(len > 20){
+            minX = Math.min(minX, curX, nx);
+            maxX = Math.max(maxX, curX, nx);
+            minY = Math.min(minY, curY, ny);
+            maxY = Math.max(maxY, curY, ny);
+          }
+          curX = nx; curY = ny;
+        } else if(sop === OPS.curveTo){
+          curves++;
+          if(idx+5 < subArgs.length){
+            idx += 4;
+            curX = subArgs[idx++]; curY = subArgs[idx++];
+          }
+        } else if(sop === OPS.curveTo2 || sop === OPS.curveTo3){
+          curves++;
+          if(idx+3 < subArgs.length){
+            idx += 2;
+            curX = subArgs[idx++]; curY = subArgs[idx++];
+          }
+        } else if(sop === OPS.rectangle){
+          rects++;
+          if(idx+3 < subArgs.length) idx += 4;
+        } else if(sop === OPS.closePath){
+          curX = startX; curY = startY;
+        }
+      }
+    } else if(fn === OPS.rectangle){
+      rects++;
+    }
+  }
+
+  return {
+    totalLines, longLines, horizontalRun, verticalRun, rects, curves,
+    bbox: (minX !== Infinity) ? {minX, minY, maxX, maxY} : null
+  };
+}
+
+function detectPageFormat(w, h){
+  const sizes = [
+    {name: "А0", w: 2384, h: 3370},
+    {name: "А1", w: 1684, h: 2384},
+    {name: "А2", w: 1191, h: 1684},
+    {name: "А3", w: 842, h: 1191},
+    {name: "А4", w: 595, h: 842}
+  ];
+  const ww = Math.min(w, h), hh = Math.max(w, h);
+  for(const s of sizes){
+    const sw = Math.min(s.w, s.h), sh = Math.max(s.w, s.h);
+    if(Math.abs(ww - sw) < 30 && Math.abs(hh - sh) < 30){
+      return s.name + (w > h ? " (альбомная)" : " (книжная)");
+    }
+  }
+  const mmW = Math.round(w * 25.4 / 72);
+  const mmH = Math.round(h * 25.4 / 72);
+  return `${mmW}×${mmH} мм`;
+}
+
+function estimateScales(an){
+  if(!an.bboxMax || an.bboxMax.x === -Infinity) return null;
+  const contentW = an.bboxMax.x - an.bboxMin.x;
+  const contentH = an.bboxMax.y - an.bboxMin.y;
+  return [50, 100, 200, 500].map(s => ({
+    scale: s,
+    widthM: +(contentW * 0.3528 * s / 1000).toFixed(1),
+    heightM: +(contentH * 0.3528 * s / 1000).toFixed(1)
+  }));
 }
 
 async function renderPdfPages(){
   if(!pdfState.doc || pdfState.rendering) return;
   pdfState.rendering = true;
+  console.log("[PDF] Рендеринг страниц, zoom:", pdfState.zoom);
 
   const container = document.getElementById("pdfPages");
   container.innerHTML = "";
@@ -1418,29 +1966,35 @@ async function renderPdfPages(){
 
   const scale = pdfState.baseScale * pdfState.zoom;
 
-  for(let i = 1; i <= pdfState.pageCount; i++){
-    const page = await pdfState.doc.getPage(i);
-    const viewport = page.getViewport({scale});
-    const canvas = document.createElement("canvas");
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
-    const ctx = canvas.getContext("2d");
+  try {
+    for(let i = 1; i <= pdfState.pageCount; i++){
+      const page = await pdfState.doc.getPage(i);
+      const viewport = page.getViewport({scale});
+      const canvas = document.createElement("canvas");
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      const ctx = canvas.getContext("2d");
 
-    const wrap = document.createElement("div");
-    wrap.className = "pdf-page-wrap";
-    wrap.appendChild(canvas);
+      const wrap = document.createElement("div");
+      wrap.className = "pdf-page-wrap";
+      wrap.appendChild(canvas);
 
-    const label = document.createElement("div");
-    label.className = "pdf-page-num";
-    label.textContent = `Страница ${i} из ${pdfState.pageCount}`;
-    container.appendChild(label);
-    container.appendChild(wrap);
+      const label = document.createElement("div");
+      label.className = "pdf-page-num";
+      label.textContent = `Страница ${i} из ${pdfState.pageCount}`;
+      container.appendChild(label);
+      container.appendChild(wrap);
 
-    await page.render({canvasContext: ctx, viewport}).promise;
+      await page.render({canvasContext: ctx, viewport}).promise;
+      console.log(`[PDF] Страница ${i} отрендерена`);
+    }
+  } catch(err){
+    console.error("[PDF] Ошибка рендеринга:", err);
   }
 
   pdfState.rendering = false;
-  document.getElementById("pdfZoom").textContent = Math.round(pdfState.zoom * 100) + "%";
+  const zoomEl = document.getElementById("pdfZoom");
+  if(zoomEl) zoomEl.textContent = Math.round(pdfState.zoom * 100) + "%";
 }
 
 window.zoomPdf = function(delta){
@@ -1460,14 +2014,18 @@ window.togglePdfPanel = function(show){
 // Wire PDF dropzone
 const pdz = document.getElementById("pdfDropzone");
 const pfi = document.getElementById("pdfInput");
-pdz.addEventListener("click", e => { if(e.target.tagName !== "INPUT") pfi.click(); });
-pfi.addEventListener("change", e => { if(e.target.files[0]) handlePdfFile(e.target.files[0]); });
-["dragenter","dragover"].forEach(ev => pdz.addEventListener(ev, e => { e.preventDefault(); pdz.classList.add("drag"); }));
-["dragleave","drop"].forEach(ev => pdz.addEventListener(ev, e => { e.preventDefault(); pdz.classList.remove("drag"); }));
-pdz.addEventListener("drop", e => {
-  const f = e.dataTransfer.files[0];
-  if(f) handlePdfFile(f);
-});
+if(pdz && pfi){
+  pdz.addEventListener("click", e => { if(e.target.tagName !== "INPUT") pfi.click(); });
+  pfi.addEventListener("change", e => { if(e.target.files[0]) handlePdfFile(e.target.files[0]); });
+  ["dragenter","dragover"].forEach(ev => pdz.addEventListener(ev, e => { e.preventDefault(); pdz.classList.add("drag"); }));
+  ["dragleave","drop"].forEach(ev => pdz.addEventListener(ev, e => { e.preventDefault(); pdz.classList.remove("drag"); }));
+  pdz.addEventListener("drop", e => {
+    e.preventDefault();
+    pdz.classList.remove("drag");
+    const f = e.dataTransfer.files[0];
+    if(f) handlePdfFile(f);
+  });
+}
 
 // Initial render
 render();
